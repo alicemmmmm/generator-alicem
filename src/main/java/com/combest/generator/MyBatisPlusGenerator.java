@@ -124,6 +124,7 @@ public class MyBatisPlusGenerator {
         // templateConfig.setEntity("templates/entity-test.java");
         // templateConfig.setService("templates/service.java");
         // templateConfig.setController("templates/controller.java");
+        // templateConfig.setController("templates/controller.java");
 
         templateConfig.setXml(null);
         autoGenerator.setTemplate(templateConfig);
