@@ -12,15 +12,16 @@
     <resultMap id="BaseResultMap" type="${package.Entity}.${entity}">
 <#list table.fields as field>
 <#if field.keyFlag><#--生成主键排在第一位-->
-        <id column="${field.name}" property="${field.propertyName}" jdbcType="${field.type?upper_case}"/><#assign primaryKey=field/>
+        <id column="${field.name}" property="${field.propertyName}" jdbcType="<#if field.type?upper_case == 'INT'>INTEGER<#elseif field.type?upper_case == 'DATETIME'>TIMESTAMP<#else>${field.type?upper_case}</#if>"/>
+        <#assign primaryKey=field/>
 </#if>
 </#list>
 <#list table.commonFields as field><#--生成公共字段 -->
-    <result column="${field.name}" property="${field.propertyName}" jdbcType="${field.type?upper_case}"/>
+    <result column="${field.name}" property="${field.propertyName}" jdbcType="<#if field.type?upper_case == 'INT'>INTEGER<#elseif field.type?upper_case == 'DATETIME'>TIMESTAMP<#else>${field.type?upper_case}</#if>"/>
 </#list>
 <#list table.fields as field>
 <#if !field.keyFlag><#--生成普通字段 -->
-        <result column="${field.name}" property="${field.propertyName}" jdbcType="${field.type?upper_case}"/>
+        <result column="${field.name}" property="${field.propertyName}" jdbcType="<#if field.type?upper_case == 'INT'>INTEGER<#elseif field.type?upper_case == 'DATETIME'>TIMESTAMP<#else>${field.type?upper_case}</#if>"/>
 </#if>
 </#list>
     </resultMap>
@@ -86,7 +87,7 @@
     </select>
 
     <!-- 根据条件查询总记录数 -->
-    <select id="countByQuerys">
+    <select id="countByQuerys" resultType="java.lang.Long">
         SELECT COUNT(<#if primaryKey??>${primaryKey.name}<#else>*</#if>) FROM ${table.name} with(nolock)
         <include refid="whereSql" />
     </select>
@@ -107,7 +108,7 @@
         select
         <include refid="Base_Column_List" />
         from ${table.name}
-        where ${primaryKey.name} = ${r'#{'}${primaryKey.propertyName}${r',jdbcType='}${primaryKey.type?upper_case}${r'}'}
+        where ${primaryKey.name} = ${r'#{'}${primaryKey.propertyName}${r',jdbcType='}<#if primaryKey.type?upper_case == 'INT'>INTEGER<#else>${primaryKey.type?upper_case}</#if>${r'}'}
     </select>
 </#if>
 
@@ -115,7 +116,7 @@
     <!-- 根据主键删除单条数据 -->
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete from ${table.name}
-        where ${primaryKey.name} = ${r'#{'}${primaryKey.propertyName}${r',jdbcType='}${primaryKey.type?upper_case}${r'}'}
+        where ${primaryKey.name} = ${r'#{'}${primaryKey.propertyName}${r',jdbcType='}<#if primaryKey.type?upper_case == 'INT'>INTEGER<#else>${primaryKey.type?upper_case}</#if>${r'}'}
     </delete>
 </#if>
 
@@ -125,7 +126,7 @@
         <include refid="Base_Column_List" />
         )values (
 <#list table.fields as field>
-        ${r'#{'}${field.propertyName}${r',jdbcType='}${field.type?upper_case}${r'}'}<#if field_has_next>,</#if>
+        ${r'#{'}${field.propertyName}${r',jdbcType='}<#if field.type?upper_case == 'INT'>INTEGER<#elseif field.type?upper_case == 'DATETIME'>TIMESTAMP<#else>${field.type?upper_case}</#if>${r'}'}<#if field_has_next>,</#if>
 </#list>
     )
     </insert>
@@ -143,7 +144,7 @@
         <trim prefix="values (" suffix=")" suffixOverrides=",">
         <#list table.fields as field>
         <if test="${field.propertyName} != null">
-        ${r'#{'}${field.propertyName}${r',jdbcType='}${field.type?upper_case}${r'}'},
+        ${r'#{'}${field.propertyName}${r',jdbcType='}<#if field.type?upper_case == 'INT'>INTEGER<#elseif field.type?upper_case == 'DATETIME'>TIMESTAMP<#else>${field.type?upper_case}</#if>${r'}'},
         </if>
         </#list>
         </trim>
@@ -156,12 +157,12 @@
         <#list table.fields as field>
             <#if !field.keyFlag>
             <if test="${field.propertyName} != null">
-            ${field.name} = ${r'#{'}${field.propertyName}${r',jdbcType='}${field.type?upper_case}${r'}'},
+            ${field.name} = ${r'#{'}${field.propertyName}${r',jdbcType='}<#if field.type?upper_case == 'INT'>INTEGER<#elseif field.type?upper_case == 'DATETIME'>TIMESTAMP<#else>${field.type?upper_case}</#if>${r'}'},
             </if>
             </#if>
         </#list>
         </set>
-        where ${primaryKey.name} = ${r'#{'}${primaryKey.propertyName}${r',jdbcType='}${primaryKey.type?upper_case}${r'}'}
+        where ${primaryKey.name} = ${r'#{'}${primaryKey.propertyName}${r',jdbcType='}<#if primaryKey.type?upper_case == 'INT'>INTEGER<#else>${primaryKey.type?upper_case}</#if>${r'}'}
     </update>
 </#if>
 
@@ -171,10 +172,10 @@
         update ${table.name} set
         <#list table.fields as field>
             <#if !field.keyFlag>
-        ${field.name} = ${r'#{'}${field.propertyName}${r',jdbcType='}${field.type?upper_case}${r'}'}<#if field_has_next>,</#if>
+        ${field.name} = ${r'#{'}${field.propertyName}${r',jdbcType='}<#if field.type?upper_case == 'INT'>INTEGER<#elseif field.type?upper_case == 'DATETIME'>TIMESTAMP<#else>${field.type?upper_case}</#if>${r'}'}<#if field_has_next>,</#if>
             </#if>
         </#list>
-        where ${primaryKey.name} = ${r'#{'}${primaryKey.propertyName}${r',jdbcType='}${primaryKey.type?upper_case}${r'}'}
+        where ${primaryKey.name} = ${r'#{'}${primaryKey.propertyName}${r',jdbcType='}<#if primaryKey.type?upper_case == 'INT'>INTEGER<#else>${primaryKey.type?upper_case}</#if>${r'}'}
     </update>
 </#if>
 </mapper>

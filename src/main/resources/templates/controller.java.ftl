@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,7 +28,7 @@ import ${package.Entity}.${entity};
  * @Description
  */
 @Slf4j
-@Controller
+@RestController
 @RequestMapping("/${entity?uncap_first}")
 public class ${table.controllerName} {
 <#list table.fields as field>

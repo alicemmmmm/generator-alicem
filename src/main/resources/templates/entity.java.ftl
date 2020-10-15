@@ -35,8 +35,8 @@ public class ${entity} implements Serializable {
 <#-- ----------  BEGIN 字段循环遍历  ---------->
 <#list table.fields as field>
     <#if field.propertyType == 'Date'>
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm",timezone="GMT+8")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private ${field.propertyType} ${field.propertyName};<#if field.comment??> //${field.comment}</#if>
     <#else>
     private ${field.propertyType} ${field.propertyName};<#if field.comment??> //${field.comment}</#if>
