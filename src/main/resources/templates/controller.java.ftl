@@ -44,7 +44,7 @@ public class ${table.controllerName} {
     @ForbidRepeatCommit(createRepeatToken = true)
     @GetMapping("/getBy${primaryKey.propertyName?cap_first}")
     public Map<String, Object> get${entity}By${primaryKey.propertyName?cap_first}(@RequestParam(required = true, value = "${primaryKey.propertyName}") Integer ${primaryKey.propertyName}){
-    return JsonResult.failed(0, "", ${entity?uncap_first}Service.getBy${primaryKey.propertyName?cap_first}(${primaryKey.propertyName}));
+    	return JsonResult.failed(0, "", ${entity?uncap_first}Service.getBy${primaryKey.propertyName?cap_first}(${primaryKey.propertyName}));
     }
 </#if>
 

@@ -50,13 +50,13 @@ public class ${table.serviceImplName} implements ${table.serviceName} {
         Integer result = null;
         //判断是插入还是更新
         if (StringUtils.isEmpty(${entity?uncap_first}.get${primaryKey.propertyName?cap_first}())) {
-        //插入
-        ${entity?uncap_first}Mapper.insertSelective(${entity?uncap_first});
-        //已设置插入成功主键回显
-        result = ${entity?uncap_first}.get${primaryKey.propertyName?cap_first}();
+	        //插入
+	        ${entity?uncap_first}Mapper.insertSelective(${entity?uncap_first});
+	        //已设置插入成功主键回显
+	        result = ${entity?uncap_first}.get${primaryKey.propertyName?cap_first}();
         }else {
-        //更新
-        result = ${entity?uncap_first}Mapper.updateByPrimaryKeySelective(${entity?uncap_first});
+	        //更新
+	        result = ${entity?uncap_first}Mapper.updateByPrimaryKeySelective(${entity?uncap_first});
         }
         return result;
     }

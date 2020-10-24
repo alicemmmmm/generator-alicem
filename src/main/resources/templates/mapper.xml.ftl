@@ -41,9 +41,9 @@
     <sql id="orderSql">
         order by
         <choose>
-            <!-- customize为用户自定义为值,用户可替换为自己需要进行排序的字段 -->
+            <!-- alicem为用户自定义为值,用户可替换为自己需要进行排序的字段 -->
             <!--
-            <when test="orderName == 'customize'">customize</when>
+            <when test="orderName == 'alicem'">alicem</when>
             -->
             <#if primaryKey??>
             <otherwise>${primaryKey.name}</otherwise>
@@ -60,10 +60,10 @@
     <sql id="whereSql">
         <where>
             <trim prefixOverrides="and">
-                <!-- customize为用户自定义为值,用户可替换为自己需要进行比较的字段 -->
+                <!-- alicem为用户自定义为值,用户可替换为自己需要进行比较的字段 -->
                 <!--
-                <if test="customize != null and customize != '' ">
-                    and customize like concat('%',${r'#{customize}'},'%')
+                <if test="alicem != null and customize != '' ">
+                    and alicem like concat('%',${r'#{alicem}'},'%')
                 </if>
                 -->
             </trim>

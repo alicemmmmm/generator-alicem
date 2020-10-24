@@ -53,7 +53,7 @@ public class MyBatisPlusGenerator {
         String projectName = "/generator";
 
         globalConfig.setOutputDir(projectPath + projectName+"/src/main/java");
-        globalConfig.setAuthor("author"); //开发人员
+        globalConfig.setAuthor("lhb"); //开发人员
         globalConfig.setOpen(false);
         globalConfig.setFileOverride(true); //是否覆盖已有文件
         globalConfig.setBaseResultMap(true);
