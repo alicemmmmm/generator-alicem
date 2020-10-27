@@ -140,8 +140,10 @@ public class MyBatisPlusGenerator {
 
         // 如果 setInclude() //设置表名不加参数, 会自动查找所有表
         // 如需要制定单个表, 需填写参数如: strategyConfig.setInclude("user_info);
-        strategyConfig.setInclude(); //为空生成所有
-//        strategyConfig.setInclude(scanner("表名，多个英文逗号分割").split(",")); //可单独设置表名
+        
+//        strategyConfig.setInclude(); //为空生成所有
+        strategyConfig.setInclude(scanner("表名，多个英文逗号分割").split(",")); //可单独设置表名
+        
         // strategyConfig.setSuperEntityColumns("id");
 //        strategyConfig.setControllerMappingHyphenStyle(true);
 
