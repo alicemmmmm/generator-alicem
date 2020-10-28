@@ -29,7 +29,7 @@ import ${package.Entity}.${entity};
  */
 @Slf4j
 @RestController
-@RequestMapping("/${entity?uncap_first}")
+@RequestMapping("<#if cfg.modelName??>/${cfg.modelName}</#if>/${entity?uncap_first}")
 public class ${table.controllerName} {
 <#list table.fields as field>
     <#if field.keyFlag>

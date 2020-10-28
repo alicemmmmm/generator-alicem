@@ -82,7 +82,8 @@ public class MyBatisPlusGenerator {
         packageConfig.setParent("com.combest");
         packageConfig.setEntity("bean"); //实体类包名
         //如果需要手动输入模块名
-        packageConfig.setModuleName(scanner("模块名"));
+        String modelName ;
+        packageConfig.setModuleName(modelName = scanner("模块名"));
         autoGenerator.setPackageInfo(packageConfig);
 
         // 自定义配置
@@ -91,7 +92,7 @@ public class MyBatisPlusGenerator {
             public void initMap() {
                 // to do nothing
                 Map<String,Object> map = new HashMap<>();
-                map.put("e",5);
+                map.put("modelName",modelName);
                 super.setMap(map);
             }
         };
