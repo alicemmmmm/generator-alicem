@@ -150,7 +150,7 @@
         </trim>
     </insert>
 <#if primaryKey??>
-    <!-- 根据主键更新单条数据 -->
+    <!-- 根据主键更新单条数据,忽略空值 -->
     <update id="updateByPrimaryKeySelective" parameterType="${package.Entity}.${entity}">
         update ${table.name}
         <set>
@@ -167,7 +167,7 @@
 </#if>
 
 <#if primaryKey??>
-    <!-- 根据主键更新单条数据,忽略空值 -->
+    <!-- 根据主键更新单条数据 -->
     <update id="updateByPrimaryKey" parameterType="${package.Entity}.${entity}">
         update ${table.name} set
         <#list table.fields as field>
