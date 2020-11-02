@@ -56,7 +56,7 @@ public interface ${table.serviceName}{
     Integer removeBy${primaryKey.propertyName?cap_first}s(int[] ${primaryKey.propertyName}s);
 </#if>
 
-<#if cfg.DeleteMethodFlag>
+<#if cfg.deleteMethodFlag>
     /**
     * 根据主键数组删除多条记录
     * @param ${primaryKey.propertyName}s 主键数组

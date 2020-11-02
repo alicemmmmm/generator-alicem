@@ -81,7 +81,7 @@ public class ${table.serviceImplName} implements ${table.serviceName} {
     }
 </#if>
 
-<#if cfg.DeleteMethodFlag>
+<#if cfg.deleteMethodFlag>
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, isolation = Isolation.DEFAULT, readOnly = false)
     public Integer deleteBy${primaryKey.propertyName?cap_first}s(int[] ${primaryKey.propertyName}s) {

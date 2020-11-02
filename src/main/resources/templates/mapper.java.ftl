@@ -94,7 +94,7 @@ public interface ${table.mapperName} {
     Integer updateIsDeleteByPrimaryKeys(@Param("primaryKeys") int[] primaryKeys);
 </#if>
 
-<#if cfg.DeleteMethodFlag>
+<#if cfg.deleteMethodFlag>
     /**
     * 根据主键数组删除多条记录
     * @param primaryKeys 主键数组

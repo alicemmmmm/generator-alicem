@@ -128,7 +128,7 @@
     </delete>
 </#if>
 
-<#if cfg.DeleteMethodFlag>
+<#if cfg.deleteMethodFlag>
     <!-- 根据主键数组移除多条记录 记录任然存在 -->
     <update id="deleteByPrimaryKeys">
         update from ${table.name} set ${cfg.fdFieldName} = <#if cfg.fdFieldType == 'int'>${cfg.fdValue}<#else>'${cfg.fdValue}'</#if>

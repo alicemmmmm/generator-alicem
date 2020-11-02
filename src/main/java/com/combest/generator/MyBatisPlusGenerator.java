@@ -63,6 +63,7 @@ public class MyBatisPlusGenerator {
         globalConfig.setBaseColumnList(true);
         globalConfig.setDateType(DateType.ONLY_DATE);
         globalConfig.setServiceName("%sService"); //UserService
+        
         autoGenerator.setGlobalConfig(globalConfig);
 
 
@@ -126,6 +127,7 @@ public class MyBatisPlusGenerator {
         //自动将数据库中表名为 user_info 格式的转为 UserInfo 命名
         strategyConfig.setTablePrefix(packageConfig.getModuleName() + "_");//表名映射到实体名称去掉前缀
         strategyConfig.setEntityBooleanColumnRemoveIsPrefix(true);// Boolean类型字段是否移除is前缀处理
+        
         autoGenerator.setStrategy(strategyConfig);
         autoGenerator.setTemplateEngine(new FreemarkerTemplateEngine());
         
@@ -146,7 +148,7 @@ public class MyBatisPlusGenerator {
                 map.put("fdValue", "1");//假删除的值
                 
 
-                map.put("DeleteMethodFlag", true);//是否需要删除方法,如果启用假删除,可以设为false不需要删除方法
+                map.put("deleteMethodFlag", true);//是否需要删除方法,如果启用假删除,可以设为false不需要删除方法
                 
                 //连表别名
                 map.put("joinFlag", false);//是否启用连表列

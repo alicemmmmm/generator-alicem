@@ -76,7 +76,7 @@ public class ${table.controllerName} {
     }
 </#if>
 
-<#if cfg.DeleteMethodFlag>
+<#if cfg.deleteMethodFlag>
     /**
     * 根据主键数组删除多条记录
     * @param ${primaryKey.propertyName}s 主键数组
