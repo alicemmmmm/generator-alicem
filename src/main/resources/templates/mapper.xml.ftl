@@ -30,11 +30,28 @@
 <#if baseColumnList>
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-<#list table.commonFields as field>
-        ${field.name},
+<#list table.fields as field>
+	<#if table.fields?size != (field_index + 1)>
+		${field.name},  <!-- <#if field.comment??>${field.comment}</#if> -->
+	<#else>
+		${field.name}  <!-- <#if field.comment??>${field.comment}</#if> -->
+	</#if>
 </#list>
-        ${table.fieldNames}
+       <#--${table.fieldNames} -->
     </sql>
+    
+<#if cfg.joinFlag>    
+    <!-- 连表查询结果列 -->
+    <sql id="joint_table_list">
+<#list table.fields as field>
+	<#if table.fields?size != (field_index + 1)>
+		${cfg.joinName}.${field.name} AS ${field.name},  
+	<#else>
+		${cfg.joinName}.${field.name} AS ${field.name} 
+	</#if>
+</#list>
+    </sql>
+</#if>
 
 </#if>
     <!-- 排序条件 -->
@@ -62,13 +79,21 @@
             <trim prefixOverrides="and">
                 <!-- alicem为用户自定义为值,用户可替换为自己需要进行比较的字段 -->
                 <!--
-                <if test="alicem != null and customize != '' ">
-                    and alicem like concat('%',${r'#{alicem}'},'%')
+                <if test="alicemA != null and alicemA != '' ">
+                    and alicem_a like concat('%',${r'#{alicemA}'},'%')
                 </if>
                 -->
+                <#if cfg.fdFlag>and ${cfg.fdFieldName} != <#if cfg.fdFieldType == 'int'>${cfg.fdValue}<#else>'${cfg.fdValue}'</#if> <!-- 删除状态  --></#if> 
             </trim>
         </where>
     </sql>
+    
+<#if cfg.fdFlag>   
+    <!-- 删除状态条件 -->
+	<sql id="where_delete_status">
+		${cfg.fdFieldName} != <#if cfg.fdFieldType == 'int'>${cfg.fdValue}<#else>'${cfg.fdValue}'</#if>	
+  	</sql>
+</#if>
 
     <!-- 分页 -->
     <sql id="pageFoot">
@@ -93,6 +118,7 @@
     </select>
 
 <#if primaryKey??>
+<#if cfg.fdFlag>
     <!-- 根据主键数组删除多条记录 -->
     <delete id="deleteByPrimaryKeys">
         delete from ${table.name} where ${primaryKey.name} in
@@ -102,6 +128,18 @@
     </delete>
 </#if>
 
+<#if cfg.DeleteMethodFlag>
+    <!-- 根据主键数组移除多条记录 记录任然存在 -->
+    <update id="deleteByPrimaryKeys">
+        update from ${table.name} set ${cfg.fdFieldName} = <#if cfg.fdFieldType == 'int'>${cfg.fdValue}<#else>'${cfg.fdValue}'</#if>
+        where ${primaryKey.name} in
+        <foreach collection="primaryKeys" item="primaryKey" index="index" open="(" separator="," close=")">
+        ${r'#{'}primaryKey${r'}'}
+        </foreach>
+    </update>
+</#if>
+</#if>
+
 <#if primaryKey??>
     <!-- 根据主键查询单条数据 -->
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -109,6 +147,9 @@
         <include refid="Base_Column_List" />
         from ${table.name}
         where ${primaryKey.name} = ${r'#{'}${primaryKey.propertyName}${r',jdbcType='}<#if primaryKey.type?upper_case == 'INT'>INTEGER<#else>${primaryKey.type?upper_case}</#if>${r'}'}
+    	<#if cfg.fdFlag>
+    	and <include refid="where_delete_status" /> 
+    	</#if>
     </select>
 </#if>
 

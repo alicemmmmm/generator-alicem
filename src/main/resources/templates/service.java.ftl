@@ -47,6 +47,16 @@ public interface ${table.serviceName}{
     List<${entity}> listByQuerys(Map<String, Object> params);
 
 <#if primaryKey??>
+<#if cfg.fdFlag>
+    /**
+    * 根据主键数组移除多条记录  修改删除状态,数据实际存在
+    * @param ${primaryKey.propertyName}s 主键数组
+    * @return
+    */
+    Integer removeBy${primaryKey.propertyName?cap_first}s(int[] ${primaryKey.propertyName}s);
+</#if>
+
+<#if cfg.DeleteMethodFlag>
     /**
     * 根据主键数组删除多条记录
     * @param ${primaryKey.propertyName}s 主键数组
@@ -54,4 +64,7 @@ public interface ${table.serviceName}{
     */
     Integer deleteBy${primaryKey.propertyName?cap_first}s(int[] ${primaryKey.propertyName}s);
 </#if>
+</#if>
+
+
 }

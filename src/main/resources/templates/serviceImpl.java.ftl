@@ -73,10 +73,20 @@ public class ${table.serviceImplName} implements ${table.serviceName} {
     }
 
 <#if primaryKey??>
+<#if cfg.fdFlag>
+	@Override
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, isolation = Isolation.DEFAULT, readOnly = false)   
+    Integer removeBy${primaryKey.propertyName?cap_first}s(int[] ${primaryKey.propertyName}s){
+    	return ${entity?uncap_first}Mapper.updateIsDeleteByPrimaryKeys(${primaryKey.propertyName}s);
+    }
+</#if>
+
+<#if cfg.DeleteMethodFlag>
     @Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, isolation = Isolation.DEFAULT, readOnly = false)
     public Integer deleteBy${primaryKey.propertyName?cap_first}s(int[] ${primaryKey.propertyName}s) {
         return ${entity?uncap_first}Mapper.deleteByPrimaryKeys(${primaryKey.propertyName}s);
     }
+</#if>
 </#if>
 }

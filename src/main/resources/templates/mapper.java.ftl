@@ -85,10 +85,22 @@ public interface ${table.mapperName} {
     */
     Long countByQuerys(Map<String, Object> params);
 
+<#if cfg.fdFlag>
+    /**
+    * 根据主键数组移除多条记录  修改删除状态,数据实际存在
+    * @param primaryKeys 主键数组
+    * @return
+    */
+    Integer updateIsDeleteByPrimaryKeys(@Param("primaryKeys") int[] primaryKeys);
+</#if>
+
+<#if cfg.DeleteMethodFlag>
     /**
     * 根据主键数组删除多条记录
     * @param primaryKeys 主键数组
     * @return
     */
     Integer deleteByPrimaryKeys(@Param("primaryKeys") int[] primaryKeys);
+</#if>    
+
 }

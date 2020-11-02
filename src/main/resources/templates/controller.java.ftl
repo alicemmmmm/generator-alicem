@@ -62,6 +62,21 @@ public class ${table.controllerName} {
 </#if>
 
 <#if primaryKey??>
+<#if cfg.fdFlag>
+    /**
+    * 根据主键数组移除多条记录  修改删除状态,数据实际存在
+    * @param ${primaryKey.propertyName}s 主键数组
+    * @return
+    */
+    @PostMapping("/remove")
+    public Map<String, Object> remove${entity}By${primaryKey.propertyName?cap_first}s(@RequestParam(required = true) String ${primaryKey.propertyName}s){
+        String[] idStrArr = ${primaryKey.propertyName}s.split(",");
+        int[] idsArr = Arrays.stream(idStrArr).mapToInt(Integer::parseInt).toArray();
+        return JsonResult.failed(0, "", ${entity?uncap_first}Service.removeBy${primaryKey.propertyName?cap_first}s(idsArr));
+    }
+</#if>
+
+<#if cfg.DeleteMethodFlag>
     /**
     * 根据主键数组删除多条记录
     * @param ${primaryKey.propertyName}s 主键数组
@@ -74,6 +89,8 @@ public class ${table.controllerName} {
         return JsonResult.failed(0, "", ${entity?uncap_first}Service.deleteBy${primaryKey.propertyName?cap_first}s(idsArr));
     }
 </#if>
+</#if>
+
 
     /**
     * @limit  每页大小

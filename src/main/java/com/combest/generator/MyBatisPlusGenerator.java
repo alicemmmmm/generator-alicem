@@ -3,7 +3,6 @@ package com.combest.generator;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
-import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
@@ -11,8 +10,11 @@ import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+import com.combest.generator.utils.StringUtils;
 
 import java.util.*;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * <p>
@@ -22,6 +24,7 @@ import java.util.*;
  * @author
  * @since
  */
+@ConfigurationProperties()
 public class MyBatisPlusGenerator {
     /**
      * <p>
@@ -83,39 +86,11 @@ public class MyBatisPlusGenerator {
         packageConfig.setEntity("bean"); //实体类包名
         //如果需要手动输入模块名
         String modelName ;
-        packageConfig.setModuleName(modelName = scanner("模块名"));
+//        packageConfig.setModuleName(modelName = scanner("模块名"));
+        packageConfig.setModuleName(modelName = "device");
         autoGenerator.setPackageInfo(packageConfig);
 
-        // 自定义配置
-        InjectionConfig injectionConfig = new InjectionConfig() {
-            @Override
-            public void initMap() {
-                // to do nothing
-                Map<String,Object> map = new HashMap<>();
-                map.put("modelName",modelName);
-                super.setMap(map);
-            }
-        };
-
-        // 如果模板引擎是 freemarker
-        String templatePath = "/templates/mapper.xml.ftl";
-
-        // 自定义输出配置
-        List<FileOutConfig> focList = new ArrayList<>();
-
-        // 自定义配置会被优先输出
-        focList.add(new FileOutConfig(templatePath) {
-            @Override
-            public String outputFile(TableInfo tableInfo) {
-
-                // 自定义输出文件名
-                return projectPath + projectName+"/src/main/resources/mapper/" + packageConfig.getModuleName()
-                        + "/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
-            }
-        });
-
-        injectionConfig.setFileOutConfigList(focList);
-        autoGenerator.setCfg(injectionConfig);
+        
 
         // 配置模板
         TemplateConfig templateConfig = new TemplateConfig();
@@ -141,8 +116,8 @@ public class MyBatisPlusGenerator {
 
         // 如果 setInclude() //设置表名不加参数, 会自动查找所有表
         // 如需要制定单个表, 需填写参数如: strategyConfig.setInclude("user_info);
-        
-//        strategyConfig.setInclude(); //为空生成所有
+        final String tableName;
+//        strategyConfig.setInclude(tableName = "equipment_file"); //为空生成所有
         strategyConfig.setInclude(scanner("表名，多个英文逗号分割").split(",")); //可单独设置表名
         
         // strategyConfig.setSuperEntityColumns("id");
@@ -153,11 +128,63 @@ public class MyBatisPlusGenerator {
         strategyConfig.setEntityBooleanColumnRemoveIsPrefix(true);// Boolean类型字段是否移除is前缀处理
         autoGenerator.setStrategy(strategyConfig);
         autoGenerator.setTemplateEngine(new FreemarkerTemplateEngine());
+        
+        
+        // 自定义配置
+        InjectionConfig injectionConfig = new InjectionConfig() {
+            @Override
+            public void initMap() {
+                // to do nothing
+                Map<String,Object> map = new HashMap<>();
+                map.put("modelName",modelName); //模块名,用于controller层访问路径添加最外一层
+                
+                //假删除
+                map.put("fdFlag", false);//是否启用假删除模式
+                map.put("fdFieldName", "is_delete");//如启用假删除,需指定标记删除的属性名
+                map.put("fdFieldType", "int");//假删除的属性类型  int 或 varchar  仅支持此两种
+                map.put("fdBeanName", StringUtils.lineToHump("is_delete"));//假删除的实体属性名
+                map.put("fdValue", "1");//假删除的值
+                
+
+                map.put("DeleteMethodFlag", true);//是否需要删除方法,如果启用假删除,可以设为false不需要删除方法
+                
+                //连表别名
+                map.put("joinFlag", false);//是否启用连表列
+//                map.put("joinName", StringUtils.takeTableAlias(tableName));//连表,表的别名(默认取每个单词的首位)
+                
+                
+                super.setMap(map);
+            }
+        };
+
+        // 如果模板引擎是 freemarker
+        String templatePath = "/templates/mapper.xml.ftl";
+
+        // 自定义输出配置
+        List<FileOutConfig> focList = new ArrayList<>();
+
+        // 自定义配置会被优先输出
+        focList.add(new FileOutConfig(templatePath) {
+            @Override
+            public String outputFile(TableInfo tableInfo) {
+
+                // 自定义输出文件名
+                return projectPath + projectName+"/src/main/resources/mapper/" + packageConfig.getModuleName()
+                        + "/" + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
+            }
+        });
+
+        injectionConfig.setFileOutConfigList(focList);
+        
+        autoGenerator.setCfg(injectionConfig);
+        
         System.out.println("===================== MyBatis Plus Generator ==================");
 
         autoGenerator.execute();
 
         System.out.println("================= MyBatis Plus Generator Execute Complete ==================");
     }
+    
+    
 
 }
