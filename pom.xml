@@ -75,11 +75,11 @@
 			<version>5.2.8.RELEASE</version>
 		</dependency>
 
-		<dependency>
+		<!-- <dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>easyexcel</artifactId>
 			<version>2.2.6</version>
-		</dependency>
+		</dependency> -->
 
 		<dependency>
 			<groupId>org.yaml</groupId>

@@ -119,6 +119,17 @@
 
 <#if primaryKey??>
 <#if cfg.fdFlag>
+    <!-- 根据主键数组移除多条记录 记录任然存在 -->
+    <update id="updateIsDeleteByPrimaryKeys">
+        update from ${table.name} set ${cfg.fdFieldName} = <#if cfg.fdFieldType == 'int'>${cfg.fdValue}<#else>'${cfg.fdValue}'</#if>
+        where ${primaryKey.name} in
+        <foreach collection="primaryKeys" item="primaryKey" index="index" open="(" separator="," close=")">
+        ${r'#{'}primaryKey${r'}'}
+        </foreach>
+    </update>
+</#if>
+
+<#if cfg.deleteMethodFlag>
     <!-- 根据主键数组删除多条记录 -->
     <delete id="deleteByPrimaryKeys">
         delete from ${table.name} where ${primaryKey.name} in
@@ -126,17 +137,6 @@
         ${r'#{'}primaryKey${r'}'}
         </foreach>
     </delete>
-</#if>
-
-<#if cfg.deleteMethodFlag>
-    <!-- 根据主键数组移除多条记录 记录任然存在 -->
-    <update id="deleteByPrimaryKeys">
-        update from ${table.name} set ${cfg.fdFieldName} = <#if cfg.fdFieldType == 'int'>${cfg.fdValue}<#else>'${cfg.fdValue}'</#if>
-        where ${primaryKey.name} in
-        <foreach collection="primaryKeys" item="primaryKey" index="index" open="(" separator="," close=")">
-        ${r'#{'}primaryKey${r'}'}
-        </foreach>
-    </update>
 </#if>
 </#if>
 

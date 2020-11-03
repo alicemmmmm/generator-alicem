@@ -76,7 +76,7 @@ public class ${table.serviceImplName} implements ${table.serviceName} {
 <#if cfg.fdFlag>
 	@Override
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class, isolation = Isolation.DEFAULT, readOnly = false)   
-    Integer removeBy${primaryKey.propertyName?cap_first}s(int[] ${primaryKey.propertyName}s){
+    public Integer removeBy${primaryKey.propertyName?cap_first}s(int[] ${primaryKey.propertyName}s){
     	return ${entity?uncap_first}Mapper.updateIsDeleteByPrimaryKeys(${primaryKey.propertyName}s);
     }
 </#if>
