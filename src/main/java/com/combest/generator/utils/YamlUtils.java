@@ -10,16 +10,19 @@ import org.yaml.snakeyaml.Yaml;
 */
 public class YamlUtils {
 	
-	private static final Yaml INSTANCE = new Yaml();
+	private static Yaml yaml = new Yaml();
 	
 	private static final String FILE_NAME = "generatorConfig.yml";
 	
+	private static final String DATA_SOURCE_CONFIG_FILE_NAME = "dataSourceConfig.yml";
+	
 	static {
-		INSTANCE.load(YamlUtils.class.getClassLoader()
-	            .getResourceAsStream(FILE_NAME));
+		
 	}
 	
-	
+	public static Yaml getYaml(String fileName) {
+		return (Yaml) yaml.load(YamlUtils.class.getClassLoader().getResourceAsStream(FILE_NAME));
+	}
 	
 
 }

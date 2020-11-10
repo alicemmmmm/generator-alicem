@@ -19,12 +19,13 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 /**
  * <p>
  * MyBatis Plus Generator 配置执行类示例
+ * 
+ * 1.0 版本
  * </p>
  *
  * @author
  * @since
  */
-@ConfigurationProperties()
 public class MyBatisPlusGenerator {
     /**
      * <p>
@@ -118,7 +119,11 @@ public class MyBatisPlusGenerator {
         // 如果 setInclude() //设置表名不加参数, 会自动查找所有表
         // 如需要制定单个表, 需填写参数如: strategyConfig.setInclude("user_info);
         final String tableName;
-        strategyConfig.setInclude(tableName = "check_standard"); //为空生成所有
+        tableName = "check_standard,check_standard_equipment_file,"
+        		+ "check_standard_sub,enclosure_manage,equipment_file,files_manage,files_type_manage,maintenance_level"
+        		+ ",supplier,turn_on,turn_on_sub";
+        tableName.split(",");
+        strategyConfig.setInclude("maintain_plan,maintain_plan_sub".split(",")); //为空生成所有
 //        strategyConfig.setInclude(scanner("表名，多个英文逗号分割").split(",")); //可单独设置表名
         
         // strategyConfig.setSuperEntityColumns("id");
@@ -129,6 +134,7 @@ public class MyBatisPlusGenerator {
         strategyConfig.setEntityBooleanColumnRemoveIsPrefix(true);// Boolean类型字段是否移除is前缀处理
         
         autoGenerator.setStrategy(strategyConfig);
+        
         autoGenerator.setTemplateEngine(new FreemarkerTemplateEngine());
         
         
@@ -141,23 +147,30 @@ public class MyBatisPlusGenerator {
                 map.put("modelName",modelName); //模块名,用于controller层访问路径添加最外一层
                 
                 //假删除
-                map.put("fdFlag", true);//是否启用假删除模式
+                map.put("fdFlag", false);//是否启用假删除模式
                 map.put("fdFieldName", "is_delete");//如启用假删除,需指定标记删除的属性名
                 map.put("fdFieldType", "varchar");//假删除的属性类型  int 或 varchar  仅支持此两种
                 map.put("fdBeanName", StringUtils.lineToHump("is_delete"));//假删除的实体属性名
                 map.put("fdValue", "1");//假删除的值
                 
 
-                map.put("deleteMethodFlag", false);//是否需要删除方法,如果启用假删除,可以设为false不需要删除方法
+                map.put("deleteMethodFlag", true);//是否需要删除方法,如果启用假删除,可以设为false不需要删除方法
                 
                 //连表别名
                 map.put("joinFlag", false);//是否启用连表列
 //                map.put("joinName", StringUtils.takeTableAlias(tableName));//连表,表的别名(默认取每个单词的首位)
                 
+                //是否开启swagger模式
+                map.put("swaggerFlag", true);
+                
+                //是否为子表(子表不生成 分页查询,保存等接口)
+                map.put("subTableFlag", true);
                 
                 super.setMap(map);
             }
         };
+
+        System.out.println(injectionConfig.getMap());
 
         // 如果模板引擎是 freemarker
         String templatePath = "/templates/mapper.xml.ftl";

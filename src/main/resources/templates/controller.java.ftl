@@ -16,6 +16,13 @@ import com.combest.annotate.submit.ForbidRepeatCommit;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
+<#if cfg.swaggerFlag>
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+</#if>
+
 import ${package.Service}.${table.serviceName};
 import ${package.Entity}.${entity};
 
@@ -30,6 +37,9 @@ import ${package.Entity}.${entity};
 @Slf4j
 @RestController
 @RequestMapping("<#if cfg.modelName??>/${cfg.modelName}</#if>/${entity?uncap_first}")
+<#if cfg.swaggerFlag>
+@Api(tags = "设备管理-计划管理-保养计划")
+</#if>
 public class ${table.controllerName} {
 <#list table.fields as field>
     <#if field.keyFlag>
@@ -43,6 +53,10 @@ public class ${table.controllerName} {
 <#if primaryKey??>
     @ForbidRepeatCommit(createRepeatToken = true)
     @GetMapping("/getBy${primaryKey.propertyName?cap_first}")
+    <#if cfg.swaggerFlag>
+    @ApiOperation("根据主键${primaryKey.propertyName}查询单条记录")
+    @ApiImplicitParam(name = "${primaryKey.propertyName}",value = "主键${primaryKey.propertyName}",required = true,dataType = "integer",paramType = "query")
+    </#if>
     public Map<String, Object> get${entity}By${primaryKey.propertyName?cap_first}(@RequestParam(required = true, value = "${primaryKey.propertyName}") Integer ${primaryKey.propertyName}){
     	return JsonResult.failed(0, "", ${entity?uncap_first}Service.getBy${primaryKey.propertyName?cap_first}(${primaryKey.propertyName}));
     }
@@ -50,25 +64,32 @@ public class ${table.controllerName} {
 
 <#if primaryKey??>
     /**
-    * 插入或更新 带有主键id即更新  否则即插入
+    * 插入或更新 带有主键${primaryKey.propertyName}即更新  否则即插入
     * @param ${entity?uncap_first}
     * @return 插入成功返回插入后的主键id,更新成功返回更新记录的条数
     */
     @ForbidRepeatCommit(checkRepeat = true)
     @PostMapping("/save")
+    <#if cfg.swaggerFlag>
+    @ApiOperation("插入或更新 带有主键${primaryKey.propertyName}即更新  否则即插入")
+    </#if>
     public Map<String, Object> save${entity}(@RequestBody ${entity} ${entity?uncap_first}){
-        return JsonResult.failed(0, StringUtils.isEmpty(${entity?uncap_first}.get${primaryKey.propertyName?cap_first}()) ? "插入" : "更新", ${entity?uncap_first}Service.save(${entity?uncap_first}));
+        return JsonResult.failed(0, StringUtils.isEmpty(${entity?uncap_first}.get${primaryKey.propertyName?cap_first}()) ? "insert" : "update", ${entity?uncap_first}Service.save(${entity?uncap_first}));
     }
 </#if>
 
 <#if primaryKey??>
 <#if cfg.fdFlag>
     /**
-    * 根据主键数组移除多条记录  修改删除状态,数据实际存在
+    * 根据主键字符串移除多条记录  修改删除状态,数据实际存在
     * @param ${primaryKey.propertyName}s 主键数组
     * @return
     */
     @PostMapping("/remove")
+    <#if cfg.swaggerFlag>
+    @ApiOperation("根据主键数组移除多条记录,修改删除状态,数据实际存在")
+    @ApiImplicitParam(name = "${primaryKey.propertyName}s",value = "主键字符串,用逗号分隔",required = true,dataType = "string",paramType = "query")
+    </#if>
     public Map<String, Object> remove${entity}By${primaryKey.propertyName?cap_first}s(@RequestParam(required = true) String ${primaryKey.propertyName}s){
         String[] idStrArr = ${primaryKey.propertyName}s.split(",");
         int[] idsArr = Arrays.stream(idStrArr).mapToInt(Integer::parseInt).toArray();
@@ -78,11 +99,15 @@ public class ${table.controllerName} {
 
 <#if cfg.deleteMethodFlag>
     /**
-    * 根据主键数组删除多条记录
+    * 根据主键字符串删除多条记录
     * @param ${primaryKey.propertyName}s 主键数组
     * @return
     */
     @PostMapping("/delete")
+    <#if cfg.swaggerFlag>
+    @ApiOperation("根据主键字符串删除多条记录")
+    @ApiImplicitParam(name = "${primaryKey.propertyName}s",value = "主键字符串,用逗号分隔",required = true,dataType = "string",paramType = "query")
+    </#if>
     public Map<String, Object> delete${entity}By${primaryKey.propertyName?cap_first}s(@RequestParam(required = true) String ${primaryKey.propertyName}s){
         String[] idStrArr = ${primaryKey.propertyName}s.split(",");
         int[] idsArr = Arrays.stream(idStrArr).mapToInt(Integer::parseInt).toArray();
@@ -99,6 +124,13 @@ public class ${table.controllerName} {
     */
     @ForbidRepeatCommit(createRepeatToken = true)
     @PostMapping("/list")
+    <#if cfg.swaggerFlag>
+    @ApiOperation("根据搜索条件查询分页信息")
+    @ApiImplicitParams({
+    	@ApiImplicitParam(name = "limit",value = "每页大小",required = true,dataType = "integer",paramType = "query",defaultValue = "20"),
+    	@ApiImplicitParam(name = "page",value = "当前页码",required = true,dataType = "integer",paramType = "query",defaultValue = "1")
+    })
+    </#if>
     public Map<String, Object> get${entity}List(
     @RequestParam(required = true, value = "limit", defaultValue = "20") Integer limit,
     @RequestParam(required = true, value = "page", defaultValue = "1") Integer page) {

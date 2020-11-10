@@ -13,6 +13,10 @@ import com.fasterxml.jackson.annotation.JsonFormat;
         <#break>
     </#if>
 </#list>
+<#if cfg.swaggerFlag>
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+</#if>
 <#if entityLombokModel>
 import lombok.Data;
 </#if>
@@ -28,20 +32,39 @@ import lombok.Data;
 <#if entityLombokModel>
 @Data
 </#if>
+<#if cfg.swaggerFlag>
+@ApiModel(value = "${entity}", description = "<#if table.comment??>${table.comment}<#else>${entity}</#if>")
+</#if>
 public class ${entity} implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
 <#-- ----------  BEGIN 字段循环遍历  ---------->
 <#list table.fields as field>
-    <#if field.propertyType == 'Date'>
+<#------------  swaggerFlag模式判断  ---------->
+<#if cfg.swaggerFlag>
+	<#if field.propertyType == 'Date'>
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @ApiModelProperty("<#if field.comment??>${field.comment}</#if>")
+    private ${field.propertyType} ${field.propertyName};<#--<#if field.comment??> //${field.comment}</#if>-->
+    
+    <#else>
+    @ApiModelProperty("<#if field.comment??>${field.comment}</#if>")
+    private ${field.propertyType} ${field.propertyName};<#--<#if field.comment??> //${field.comment}</#if>-->
+    
+    </#if>
+<#else>
+	<#if field.propertyType == 'Date'>
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private ${field.propertyType} ${field.propertyName};<#if field.comment??> //${field.comment}</#if>
+    
     <#else>
     private ${field.propertyType} ${field.propertyName};<#if field.comment??> //${field.comment}</#if>
+    
     </#if>
-
+</#if>
 </#list>
 <#------------  END 字段循环遍历  ---------->
 }

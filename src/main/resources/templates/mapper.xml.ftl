@@ -58,7 +58,6 @@
     <sql id="orderSql">
         order by
         <choose>
-            <!-- alicem为用户自定义为值,用户可替换为自己需要进行排序的字段 -->
             <!--
             <when test="orderName == 'alicem'">alicem</when>
             -->
@@ -77,7 +76,6 @@
     <sql id="whereSql">
         <where>
             <trim prefixOverrides="and">
-                <!-- alicem为用户自定义为值,用户可替换为自己需要进行比较的字段 -->
                 <!--
                 <if test="alicemA != null and alicemA != '' ">
                     and alicem_a like concat('%',${r'#{alicemA}'},'%')
@@ -121,7 +119,7 @@
 <#if cfg.fdFlag>
     <!-- 根据主键数组移除多条记录 记录任然存在 -->
     <update id="updateIsDeleteByPrimaryKeys">
-        update from ${table.name} set ${cfg.fdFieldName} = <#if cfg.fdFieldType == 'int'>${cfg.fdValue}<#else>'${cfg.fdValue}'</#if>
+        update ${table.name} set ${cfg.fdFieldName} = <#if cfg.fdFieldType == 'int'>${cfg.fdValue}<#else>'${cfg.fdValue}'</#if>
         where ${primaryKey.name} in
         <foreach collection="primaryKeys" item="primaryKey" index="index" open="(" separator="," close=")">
         ${r'#{'}primaryKey${r'}'}
