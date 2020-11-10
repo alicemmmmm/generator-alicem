@@ -1,0 +1,80 @@
+#通用全局配置参数 
+commonGlobalConfig:
+  #开发人员称呼,用于类上的注释
+  author: lhb
+  #生成的项目名
+  projectName: /generator
+  #父包名。如果为空，将下面子包名必须写全部， 否则就只需写子包名
+  parent: com.combest
+  #子包名,模块名 
+  moduleName: device
+  #是否生成后自动打开文件所在文件夹
+  open: false
+
+
+
+  
+#tableName: dept_approval  #需要生成的表名
+##假删除
+#fdFlag: false #是否启用假删除模式
+#fdFieldName: is_delete  #如启用假删除,需指定标记删除的属性名
+#fdFieldType: varchar   #假删除的属性类型  int 或 varchar char
+#fdValue: 1 #确认删除的值
+#DeleteMethodFlag: true #是否需要删除方法,如果启用假删除,可以设为false不需要删除方法  
+##连表 
+#joinFlag: false  #是否启用连表列 
+##swagger模式
+#swaggerFlag: true #是否开启swagger模式
+
+#自定义配置 可对单个表自定义配置 可配置多个(list)
+#建议给表也加个说明(例:XX配置表),生成器多个地方用到
+CustomConfig: 
+  - 
+    tableName: flow_manager
+    fdFlag: false 
+    fdFieldName: is_delete 
+    fdFieldType: varchar 
+    fdValue: 1 
+    
+    DeleteMethodFlag: true 
+    joinFlag: false
+    swaggerFlag: true
+  - 
+    tableName: flow_starter
+    fdFlag: false 
+    fdFieldName: is_delete 
+    fdFieldType: varchar 
+    fdValue: 1 
+    
+    DeleteMethodFlag: true 
+    joinFlag: false
+    swaggerFlag: true
+
+#需要生成的表名
+#    tableName: flow_starter
+    
+#    #假删除
+#    #是否启用假删除模式
+#    fdFlag: true 
+#    #如启用假删除,需指定标记删除的属性名
+#    fdFieldName: is_delete 
+#    #假删除的属性类型  int 或 varchar char
+#    fdFieldType: varchar 
+#    #确认删除的值
+#    fdValue: 1 
+#    #是否需要删除方法,如果启用假删除,可以设为false不需要删除方法  
+#    DeleteMethodFlag: true 
+#   
+#    #主子表
+#  
+#    #连表
+#    #是否启用连表列
+#    joinFlag: false
+#    
+#    #swagger模式
+#    swaggerFlag: true
+
+
+
+
+  
