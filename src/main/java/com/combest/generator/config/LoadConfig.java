@@ -64,7 +64,11 @@ public class LoadConfig {
 		CONFIG_MAP = configMap;
 		
 		Map<String, Object> map = (Map<String, Object>) configMap.get("commonGlobalConfig");
-		COMMON_GLOBAL_CONFIG = JSONObject.parseObject(JSONObject.toJSONString(map), CommonGlobalConfig.class);
+		CommonGlobalConfig commonGlobalConfig = JSONObject.parseObject(JSONObject.toJSONString(map), CommonGlobalConfig.class);
+		if(commonGlobalConfig == null) {
+			commonGlobalConfig = new CommonGlobalConfig();
+		}
+		COMMON_GLOBAL_CONFIG = CONVERT.commonGlobalConfig2CommonGlobalConfig(commonGlobalConfig);
 		logger.info("加载通用全局配置:{}",COMMON_GLOBAL_CONFIG);
 
 		//自定义配置类 默认类值
@@ -103,6 +107,7 @@ public class LoadConfig {
 		customConfigList.forEach(customConfig -> {
 			if(StringUtils.isEmpty(customConfig.getTableName())) {
 				logger.error("生成失败,读取表名为空!!!");
+				throw new RuntimeException("生成失败,读取表名为空!!!");
 			}
 			customConfig = CONVERT.customConfig2CustomConfig(customConfig);
 			customConfig.setModelName(COMMON_GLOBAL_CONFIG.getModuleName());
@@ -158,10 +163,11 @@ public class LoadConfig {
 		TemplateConfig templateConfig = new TemplateConfig();
         //配置自定义输出模板
         //指定自定义模板路径，注意不要带上.ftl/.vm, 会根据使用的模板引擎自动识别
-        //templateConfig.setEntity("templates/entity-test.java");
-        //templateConfig.setService("templates/service.java");
-        //templateConfig.setController("templates/controller.java");
-        //templateConfig.setController("templates/controller.java");
+        templateConfig.setEntity(COMMON_GLOBAL_CONFIG.getTemplatePath() + "/entity.java");
+        templateConfig.setMapper(COMMON_GLOBAL_CONFIG.getTemplatePath() + "/mapper.java");
+        templateConfig.setService(COMMON_GLOBAL_CONFIG.getTemplatePath() + "/service.java");
+        templateConfig.setServiceImpl(COMMON_GLOBAL_CONFIG.getTemplatePath() + "/serviceImpl.java");
+        templateConfig.setController(COMMON_GLOBAL_CONFIG.getTemplatePath() + "/controller.java");
         templateConfig.setXml(null);
         logger.info("加载模板路径配置项完成");
 		return templateConfig;
@@ -213,7 +219,7 @@ public class LoadConfig {
         };
 
         // 如果模板引擎是 freemarker
-        String templatePath = "/templates/mapper.xml.ftl";
+        String templatePath = COMMON_GLOBAL_CONFIG.getTemplatePath() + "/mapper.xml.ftl";
 
         // 自定义输出配置
         List<FileOutConfig> focList = new ArrayList<>();

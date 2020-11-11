@@ -32,6 +32,7 @@ public interface ${table.serviceName}{
     Integer save(${entity} ${entity?uncap_first});
 </#if>
 
+<#if cfg.subTableFlag><#-- 是否为子表 -->
     /**
     * 根据条件查询总记录数
     * @param params 搜索参数
@@ -45,6 +46,7 @@ public interface ${table.serviceName}{
     * @return
     */
     List<${entity}> listByQuerys(Map<String, Object> params);
+</#if>
 
 <#if primaryKey??>
 <#if cfg.fdFlag>

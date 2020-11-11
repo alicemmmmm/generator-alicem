@@ -31,7 +31,6 @@ public class CustomConfig {
 	
 	private Boolean deleteMethodFlag;//是否需要删除方法,如果启用假删除,可以设为false不需要删除方法
 	
-	
 	//连表
 	private Boolean joinFlag;//是否启用连表列
 	
@@ -39,6 +38,9 @@ public class CustomConfig {
 	
 	//swagger模式
 	private Boolean swaggerFlag;//是否启用swagger模式
+	
+	//主子表
+	private Boolean subTableFlag;//是否为子表(子表不生成 分页查询,保存等接口)
 	
 	/**
 	 * 默认配置属性
@@ -54,5 +56,7 @@ public class CustomConfig {
 		this.joinFlag = false;
 		
 		this.swaggerFlag = false;
+		
+		this.subTableFlag = false;
 	}
 }

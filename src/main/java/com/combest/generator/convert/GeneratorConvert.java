@@ -4,6 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
+import com.combest.generator.configBean.CommonGlobalConfig;
 import com.combest.generator.configBean.CustomConfig;
 import com.combest.generator.configBean.MDataSourceConfig;
 
@@ -20,4 +21,6 @@ public interface GeneratorConvert {
 	DataSourceConfig MdataSource2(MDataSourceConfig md);
 	
 	CustomConfig customConfig2CustomConfig(CustomConfig customConfig);
+	
+	CommonGlobalConfig commonGlobalConfig2CommonGlobalConfig(CommonGlobalConfig commonGlobalConfig);
 }

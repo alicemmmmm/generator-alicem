@@ -10,6 +10,8 @@ commonGlobalConfig:
   moduleName: device
   #是否生成后自动打开文件所在文件夹
   open: false
+  #模板所在路径名(用于定制多种策略)
+  templatePath: /templates
 
 
 
@@ -25,12 +27,14 @@ commonGlobalConfig:
 #joinFlag: false  #是否启用连表列 
 ##swagger模式
 #swaggerFlag: true #是否开启swagger模式
+##主子表
+#subTableFlag: false #是否为子表(子表不生成 分页查询,保存等接口)
 
 #自定义配置 可对单个表自定义配置 可配置多个(list)
 #建议给表也加个说明(例:XX配置表),生成器多个地方用到
 CustomConfig: 
   - 
-    tableName: flow_manager
+    tableName: maintain_plan_sub
     fdFlag: false 
     fdFieldName: is_delete 
     fdFieldType: varchar 
@@ -38,18 +42,14 @@ CustomConfig:
     
     DeleteMethodFlag: true 
     joinFlag: false
-    swaggerFlag: true
-  - 
-    tableName: flow_starter
-    fdFlag: false 
-    fdFieldName: is_delete 
-    fdFieldType: varchar 
-    fdValue: 1 
+    swaggerFlag: false
     
-    DeleteMethodFlag: true 
-    joinFlag: false
-    swaggerFlag: true
-
+    subTableFlag: true
+    
+#  - 
+#    tableName: check_standard_equipment_file
+#  - 
+#    tableName: check_standard_sub
 #需要生成的表名
 #    tableName: flow_starter
     

@@ -38,7 +38,7 @@ import ${package.Entity}.${entity};
 @RestController
 @RequestMapping("<#if cfg.modelName??>/${cfg.modelName}</#if>/${entity?uncap_first}")
 <#if cfg.swaggerFlag>
-@Api(tags = "设备管理-计划管理-保养计划")
+@Api(tags = "")
 </#if>
 public class ${table.controllerName} {
 <#list table.fields as field>
@@ -78,6 +78,7 @@ public class ${table.controllerName} {
     }
 </#if>
 
+<#if cfg.subTableFlag><#-- 是否为子表 -->
 <#if primaryKey??>
 <#if cfg.fdFlag>
     /**
@@ -144,4 +145,5 @@ public class ${table.controllerName} {
         resultMap.put("count", ${entity?uncap_first}Service.countByQuerys(params));//总记录数
         return resultMap;
     }
+</#if><#-- 是否为子表 -->
 }

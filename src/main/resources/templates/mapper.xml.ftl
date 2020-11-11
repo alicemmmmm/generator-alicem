@@ -32,9 +32,9 @@
     <sql id="Base_Column_List">
 <#list table.fields as field>
 	<#if table.fields?size != (field_index + 1)>
-		${field.name},  <!-- <#if field.comment??>${field.comment}</#if> -->
+		${field.name},  <#-- <!-- <#if field.comment??>${field.comment}</#if> --><#-- -->
 	<#else>
-		${field.name}  <!-- <#if field.comment??>${field.comment}</#if> -->
+		${field.name}  <#-- <!-- <#if field.comment??>${field.comment}</#if> --><#-- -->
 	</#if>
 </#list>
        <#--${table.fieldNames} -->
@@ -93,6 +93,7 @@
   	</sql>
 </#if>
 
+<#if cfg.subTableFlag><#-- 是否为子表 -->
     <!-- 分页 -->
     <sql id="pageFoot">
         offset (${r'#{pageNo}'}-1)*${r'#{pageSize}'} row fetch next ${r'#{pageSize}'}
@@ -114,6 +115,7 @@
         SELECT COUNT(<#if primaryKey??>${primaryKey.name}<#else>*</#if>) FROM ${table.name} with(nolock)
         <include refid="whereSql" />
     </select>
+</#if>
 
 <#if primaryKey??>
 <#if cfg.fdFlag>

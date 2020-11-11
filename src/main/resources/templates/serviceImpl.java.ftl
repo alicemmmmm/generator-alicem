@@ -62,6 +62,7 @@ public class ${table.serviceImplName} implements ${table.serviceName} {
     }
 </#if>
 
+<#if cfg.subTableFlag><#-- 是否为子表 -->
     @Override
     public Long countByQuerys(Map<String, Object> params) {
         return ${entity?uncap_first}Mapper.countByQuerys(params);
@@ -71,6 +72,7 @@ public class ${table.serviceImplName} implements ${table.serviceName} {
     public List<${entity}> listByQuerys(Map<String, Object> params) {
         return ${entity?uncap_first}Mapper.listByQuerys(params);
     }
+</#if>
 
 <#if primaryKey??>
 <#if cfg.fdFlag>

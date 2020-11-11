@@ -71,6 +71,7 @@ public interface ${table.mapperName} {
     Integer updateByPrimaryKey(${entity} ${entity?uncap_first});
 </#if>
 
+<#if cfg.subTableFlag><#-- 是否为子表 -->
     /**
     * 根据搜索条件列表查询
     * @param params 搜索参数
@@ -84,6 +85,7 @@ public interface ${table.mapperName} {
     * @return
     */
     Long countByQuerys(Map<String, Object> params);
+</#if>
 
 <#if cfg.fdFlag>
     /**

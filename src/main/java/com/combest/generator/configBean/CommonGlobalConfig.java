@@ -19,4 +19,18 @@ public class CommonGlobalConfig {
 	private String moduleName;//子包名,模块名 
 	
 	private Boolean open;//是否生成后自动打开文件所在文件夹
+	
+	private String templatePath;//模板所在路径名(用于定制多种策略)
+	
+	/**
+	 * 默认配置属性
+	 */
+	public CommonGlobalConfig(){
+		this.author = "author";
+		this.projectName = "/generator";
+		this.parent = "cn.alicem";
+		this.moduleName = "moon_sea";
+		this.open = false;
+		this.templatePath = "/templates";
+	}
 }
