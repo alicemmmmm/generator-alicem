@@ -64,7 +64,7 @@ public class ${table.controllerName} {
 
 <#if primaryKey??>
     /**
-    * 插入或更新 带有主键${primaryKey.propertyName}即更新  否则即插入
+    * <p>插入或更新 带有主键${primaryKey.propertyName}即更新  否则即插入
     * @param ${entity?uncap_first}
     * @return 插入成功返回插入后的主键id,更新成功返回更新记录的条数
     */
@@ -82,7 +82,7 @@ public class ${table.controllerName} {
 <#if primaryKey??>
 <#if cfg.fdFlag>
     /**
-    * 根据主键字符串移除多条记录  修改删除状态,数据实际存在
+    * <p>根据主键字符串移除多条记录  修改删除状态,数据实际存在
     * @param ${primaryKey.propertyName}s 主键数组
     * @return
     */
@@ -100,7 +100,7 @@ public class ${table.controllerName} {
 
 <#if cfg.deleteMethodFlag>
     /**
-    * 根据主键字符串删除多条记录
+    * <p>根据主键字符串删除多条记录
     * @param ${primaryKey.propertyName}s 主键数组
     * @return
     */

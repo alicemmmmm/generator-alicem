@@ -25,7 +25,7 @@ public interface ${table.serviceName}{
 
 <#if primaryKey??>
     /**
-    * 插入或更新 带有主键id即更新  否则即插入
+    * <p>插入或更新 带有主键id即更新  否则即插入
     * @param ${entity?uncap_first}
     * @return 插入成功返回插入后的主键id,更新成功返回更新记录的条数
     */
@@ -34,14 +34,14 @@ public interface ${table.serviceName}{
 
 <#if cfg.subTableFlag><#-- 是否为子表 -->
     /**
-    * 根据条件查询总记录数
+    * <p>根据条件查询总记录数
     * @param params 搜索参数
     * @return
     */
     Long countByQuerys(Map<String, Object> params);
 
     /**
-    * 根据搜索条件列表查询
+    * <p>根据搜索条件列表查询
     * @param params 搜索参数
     * @return
     */
@@ -51,7 +51,7 @@ public interface ${table.serviceName}{
 <#if primaryKey??>
 <#if cfg.fdFlag>
     /**
-    * 根据主键数组移除多条记录  修改删除状态,数据实际存在
+    * <p>根据主键数组移除多条记录  修改删除状态,数据实际存在
     * @param ${primaryKey.propertyName}s 主键数组
     * @return
     */
@@ -60,7 +60,7 @@ public interface ${table.serviceName}{
 
 <#if cfg.deleteMethodFlag>
     /**
-    * 根据主键数组删除多条记录
+    * <p>根据主键数组删除多条记录
     * @param ${primaryKey.propertyName}s 主键数组
     * @return
     */

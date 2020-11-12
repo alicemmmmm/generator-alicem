@@ -41,6 +41,9 @@ public class CustomConfig {
 	
 	//主子表
 	private Boolean subTableFlag;//是否为子表(子表不生成 分页查询,保存等接口)
+	private String mainTableIdName;//如果为子表,可配置主表的id名称(数据库中的字段名)
+	
+	private Boolean mainTableFlag;//是否为主表
 	
 	/**
 	 * 默认配置属性
@@ -58,5 +61,9 @@ public class CustomConfig {
 		this.swaggerFlag = false;
 		
 		this.subTableFlag = false;
+		
+		this.mainTableIdName = "";
+		
+		this.mainTableFlag = false;
 	}
 }

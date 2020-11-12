@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.logging.log4j2.Log4j2Impl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
@@ -25,7 +27,7 @@ import lombok.extern.log4j.Log4j;
 * @Description 
 */
 public class GeneratorConfig {
-	
+	private static final Logger logger = LoggerFactory.getLogger(GeneratorConfig.class);
 	private static LoadConfig LOAD_CONFIG;
 	private static GlobalConfig GLOBAL_CONFIG;		
 	private static DataSourceConfig DATASOURCE_CONFIG;
@@ -58,7 +60,7 @@ public class GeneratorConfig {
 		List<CustomConfig> customConfigList = LOAD_CONFIG.loadCustomConfigList();
 		
 		customConfigList.forEach(customConfig -> {	
-			
+			logger.info("开始加载:{}",customConfig);
 			AutoGenerator autoGenerator = getAutoGenerator();
 			
 			StrategyConfig strategyConfig = LOAD_CONFIG.loadStrategyConfig();

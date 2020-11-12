@@ -74,7 +74,7 @@ public class LoadConfig {
 		//自定义配置类 默认类值
 		DEFAULT_CUSTOM_CONFIG = new CustomConfig();
 		DEFAULT_CUSTOM_CONFIG.setModelName(COMMON_GLOBAL_CONFIG.getModuleName());
-		logger.info("获取默认自定义配置类:{}",COMMON_GLOBAL_CONFIG);
+		logger.info("获取默认自定义配置类:{}",DEFAULT_CUSTOM_CONFIG);
 	}
 	
 	

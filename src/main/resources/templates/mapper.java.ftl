@@ -23,7 +23,7 @@ public interface ${table.mapperName} {
 
 <#if primaryKey??>
     /**
-    * 根据主键删除单条数据
+    * <p>根据主键删除单条数据
     * @param ${primaryKey.propertyName} 主键
     * @return
     */
@@ -31,14 +31,14 @@ public interface ${table.mapperName} {
 </#if>
 
     /**
-    * 插入单条数据
+    * <p>插入单条数据
     * @param ${entity?uncap_first}
     * @return
     */
     Integer insert(${entity} ${entity?uncap_first});
 
     /**
-    * 插入单条数据,忽略空值
+    * <p>插入单条数据,忽略空值
     * @param ${entity?uncap_first}
     * @return
     */
@@ -46,7 +46,7 @@ public interface ${table.mapperName} {
 
 <#if primaryKey??>
     /**
-    * 根据主键查询单条数据
+    * <p>根据主键查询单条数据
     * @param ${primaryKey.propertyName} 主键
     * @return
     */
@@ -55,7 +55,7 @@ public interface ${table.mapperName} {
 
 <#if primaryKey??>
     /**
-    * 根据主键更新单条数据,忽略空值
+    * <p>根据主键更新单条数据,忽略空值
     * @param ${entity?uncap_first}
     * @return
     */
@@ -64,7 +64,7 @@ public interface ${table.mapperName} {
 
 <#if primaryKey??>
     /**
-    * 根据主键更新单条数据
+    * <p>根据主键更新单条数据
     * @param ${entity?uncap_first}
     * @return
     */
@@ -73,14 +73,14 @@ public interface ${table.mapperName} {
 
 <#if cfg.subTableFlag><#-- 是否为子表 -->
     /**
-    * 根据搜索条件列表查询
+    * <p>根据搜索条件列表查询
     * @param params 搜索参数
     * @return
     */
     List<${entity}> listByQuerys(Map<String, Object> params);
 
     /**
-    * 根据条件查询总记录数
+    * <p>根据条件查询总记录数
     * @param params 搜索参数
     * @return
     */
@@ -89,7 +89,7 @@ public interface ${table.mapperName} {
 
 <#if cfg.fdFlag>
     /**
-    * 根据主键数组移除多条记录  修改删除状态,数据实际存在
+    * <p>根据主键数组移除多条记录  修改删除状态,数据实际存在
     * @param primaryKeys 主键数组
     * @return
     */
@@ -98,7 +98,7 @@ public interface ${table.mapperName} {
 
 <#if cfg.deleteMethodFlag>
     /**
-    * 根据主键数组删除多条记录
+    * <p>根据主键数组删除多条记录
     * @param primaryKeys 主键数组
     * @return
     */

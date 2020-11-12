@@ -11,7 +11,7 @@ commonGlobalConfig:
   #是否生成后自动打开文件所在文件夹
   open: false
   #模板所在路径名(用于定制多种策略)
-  templatePath: /templates
+  templatePath: /planManage
 
 
 
@@ -29,51 +29,44 @@ commonGlobalConfig:
 #swaggerFlag: true #是否开启swagger模式
 ##主子表
 #subTableFlag: false #是否为子表(子表不生成 分页查询,保存等接口)
+#mainTableIdName: false #如果为子表,可配置主表的id名称(数据库中的字段名)
+#mainTableFlag: false #是否为主表
 
 #自定义配置 可对单个表自定义配置 可配置多个(list)
 #建议给表也加个说明(例:XX配置表),生成器多个地方用到
 CustomConfig: 
   - 
-    tableName: maintain_plan_sub
-    fdFlag: false 
-    fdFieldName: is_delete 
-    fdFieldType: varchar 
-    fdValue: 1 
+    tableName: wear_plan
+      
+    subTableFlag: false
+    mainTableIdName: wp_id
     
-    DeleteMethodFlag: true 
-    joinFlag: false
-    swaggerFlag: false
-    
+    mainTableFlag: true
+  - 
+    tableName: wear_plan_sub
+      
     subTableFlag: true
+    mainTableIdName: wp_id
     
-#  - 
-#    tableName: check_standard_equipment_file
-#  - 
-#    tableName: check_standard_sub
-#需要生成的表名
-#    tableName: flow_starter
-    
-#    #假删除
-#    #是否启用假删除模式
-#    fdFlag: true 
-#    #如启用假删除,需指定标记删除的属性名
-#    fdFieldName: is_delete 
-#    #假删除的属性类型  int 或 varchar char
-#    fdFieldType: varchar 
-#    #确认删除的值
-#    fdValue: 1 
-#    #是否需要删除方法,如果启用假删除,可以设为false不需要删除方法  
-#    DeleteMethodFlag: true 
-#   
-#    #主子表
-#  
-#    #连表
-#    #是否启用连表列
-#    joinFlag: false
-#    
-#    #swagger模式
-#    swaggerFlag: true
+    mainTableFlag: false
 
+
+
+#  - 
+#    tableName: wear_plan
+#    fdFlag: false 
+#    fdFieldName: is_delete 
+#    fdFieldType: varchar 
+#    fdValue: 1 
+#    
+#    DeleteMethodFlag: true 
+#    joinFlag: false
+#    swaggerFlag: false
+#    
+#    subTableFlag: true
+#    mainTableIdName: wp_id
+#    
+#    mainTableFlag: false
 
 
 
