@@ -5,7 +5,7 @@ import lombok.Data;
 /**
 * @author lhb
 * @date 创建时间：2020年11月7日 下午6:25:20
-* @Description 
+* @Description 全局通用配置
 */
 @Data
 public class CommonGlobalConfig {

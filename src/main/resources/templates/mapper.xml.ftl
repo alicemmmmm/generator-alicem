@@ -93,7 +93,7 @@
   	</sql>
 </#if>
 
-<#if cfg.subTableFlag><#-- 是否为子表 -->
+<#if !cfg.subTableFlag><#-- 不为子表 -->
     <!-- 分页 -->
     <sql id="pageFoot">
         offset (${r'#{pageNo}'}-1)*${r'#{pageSize}'} row fetch next ${r'#{pageSize}'}

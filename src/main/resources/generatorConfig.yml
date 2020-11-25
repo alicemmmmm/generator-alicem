@@ -11,7 +11,8 @@ commonGlobalConfig:
   #是否生成后自动打开文件所在文件夹
   open: false
   #模板所在路径名(用于定制多种策略)
-  templatePath: /planManage
+#  templatePath: /planManage
+  templatePath: /templates
 
 
 
@@ -36,21 +37,10 @@ commonGlobalConfig:
 #建议给表也加个说明(例:XX配置表),生成器多个地方用到
 CustomConfig: 
   - 
-    tableName: wear_plan
-      
-    subTableFlag: false
-    mainTableIdName: wp_id
-    
-    mainTableFlag: true
+    tableName: clean_plan
+
   - 
-    tableName: wear_plan_sub
-      
-    subTableFlag: true
-    mainTableIdName: wp_id
-    
-    mainTableFlag: false
-
-
+    tableName: clean_plan_sub
 
 #  - 
 #    tableName: wear_plan

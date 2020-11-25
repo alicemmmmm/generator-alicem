@@ -7,9 +7,7 @@ import ${package.Entity}.${entity};
 <#--import org.springframework.stereotype.Repository;-->
 
 /**
- * <p>
- * <#if table.comment??>${table.comment}<#else>${entity}</#if> Mapper 接口
- * </p>
+ * <p><#if table.comment??>${table.comment}<#else>${entity}</#if> Mapper 接口
  * @author ${author}
  * @date ${date}
  * @Description
@@ -71,7 +69,7 @@ public interface ${table.mapperName} {
     Integer updateByPrimaryKey(${entity} ${entity?uncap_first});
 </#if>
 
-<#if cfg.subTableFlag><#-- 是否为子表 -->
+<#if !cfg.subTableFlag><#-- 不为子表 -->
     /**
     * <p>根据搜索条件列表查询
     * @param params 搜索参数

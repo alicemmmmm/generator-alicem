@@ -1,14 +1,12 @@
 package com.combest.generator.configBean;
 
-import com.combest.generator.utils.StringUtils;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
 * @author lhb
 * @date 创建时间：2020年11月7日 下午5:52:25
-* @Description 
+* @Description 自定义配置类
 */
 @Data
 @AllArgsConstructor
@@ -39,7 +37,7 @@ public class CustomConfig {
 	//swagger模式
 	private Boolean swaggerFlag;//是否启用swagger模式
 	
-	//主子表
+	//主子表(暂未做功能实现)
 	private Boolean subTableFlag;//是否为子表(子表不生成 分页查询,保存等接口)
 	private String mainTableIdName;//如果为子表,可配置主表的id名称(数据库中的字段名)
 	

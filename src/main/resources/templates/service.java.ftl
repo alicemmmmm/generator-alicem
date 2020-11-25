@@ -5,9 +5,7 @@ import java.util.Map;
 import ${package.Entity}.${entity};
 
 /**
- * <p>
- * <#if table.comment??>${table.comment}<#else>${entity}</#if> 服务类
- * </p>
+ * <p><#if table.comment??>${table.comment}<#else>${entity}</#if> 服务类
  * @author ${author}
  * @date ${date}
  * @Description
@@ -32,7 +30,7 @@ public interface ${table.serviceName}{
     Integer save(${entity} ${entity?uncap_first});
 </#if>
 
-<#if cfg.subTableFlag><#-- 是否为子表 -->
+<#if !cfg.subTableFlag><#-- 不为子表 -->
     /**
     * <p>根据条件查询总记录数
     * @param params 搜索参数

@@ -22,9 +22,7 @@ import lombok.Data;
 </#if>
 
 /**
- * <p>
- * <#if table.comment??>${table.comment}<#else>${entity}</#if> 实体类
- * </p>
+ * <p><#if table.comment??>${table.comment}<#else>${entity}</#if> 实体类
  * @author ${author}
  * @date ${date}
  * @Description 数据表:${table.name}

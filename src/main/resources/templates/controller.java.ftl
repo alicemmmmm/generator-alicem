@@ -27,9 +27,7 @@ import ${package.Service}.${table.serviceName};
 import ${package.Entity}.${entity};
 
 /**
- * <p>
- * <#if table.comment??>${table.comment}<#else>${entity}</#if> 前端控制器
- * </p>
+ * <p><#if table.comment??>${table.comment}<#else>${entity}</#if> 前端控制器
  * @author ${author}
  * @date ${date}
  * @Description
@@ -56,9 +54,9 @@ public class ${table.controllerName} {
     <#if cfg.swaggerFlag>
     @ApiOperation("根据主键${primaryKey.propertyName}查询单条记录")
     @ApiImplicitParam(name = "${primaryKey.propertyName}",value = "主键${primaryKey.propertyName}",required = true,dataType = "integer",paramType = "query")
-    </#if>
-    public Map<String, Object> get${entity}By${primaryKey.propertyName?cap_first}(@RequestParam(required = true, value = "${primaryKey.propertyName}") Integer ${primaryKey.propertyName}){
-    	return JsonResult.failed(0, "", ${entity?uncap_first}Service.getBy${primaryKey.propertyName?cap_first}(${primaryKey.propertyName}));
+    </#if><#-- @RequestParam(required = true, value = "${primaryKey.propertyName}") Integer ${primaryKey.propertyName} -->
+    public Map<String, Object> get${entity}By${primaryKey.propertyName?cap_first}(@RequestParam(required = true, value = "id") Integer id){
+    	return JsonResult.failed(0, "", ${entity?uncap_first}Service.getBy${primaryKey.propertyName?cap_first}(id));
     }
 </#if>
 
@@ -78,21 +76,21 @@ public class ${table.controllerName} {
     }
 </#if>
 
-<#if cfg.subTableFlag><#-- 是否为子表 -->
+<#if !cfg.subTableFlag><#-- 是否为子表 -->
 <#if primaryKey??>
 <#if cfg.fdFlag>
     /**
     * <p>根据主键字符串移除多条记录  修改删除状态,数据实际存在
-    * @param ${primaryKey.propertyName}s 主键数组
+    * @param ids 主键数组
     * @return
     */
     @PostMapping("/remove")
     <#if cfg.swaggerFlag>
     @ApiOperation("根据主键数组移除多条记录,修改删除状态,数据实际存在")
-    @ApiImplicitParam(name = "${primaryKey.propertyName}s",value = "主键字符串,用逗号分隔",required = true,dataType = "string",paramType = "query")
+    @ApiImplicitParam(name = "ids",value = "主键字符串,用逗号分隔",required = true,dataType = "string",paramType = "query")
     </#if>
-    public Map<String, Object> remove${entity}By${primaryKey.propertyName?cap_first}s(@RequestParam(required = true) String ${primaryKey.propertyName}s){
-        String[] idStrArr = ${primaryKey.propertyName}s.split(",");
+    public Map<String, Object> remove${entity}By${primaryKey.propertyName?cap_first}s(@RequestParam(required = true) String ids){
+        String[] idStrArr = ids.split(",");
         int[] idsArr = Arrays.stream(idStrArr).mapToInt(Integer::parseInt).toArray();
         return JsonResult.failed(0, "", ${entity?uncap_first}Service.removeBy${primaryKey.propertyName?cap_first}s(idsArr));
     }
@@ -101,16 +99,16 @@ public class ${table.controllerName} {
 <#if cfg.deleteMethodFlag>
     /**
     * <p>根据主键字符串删除多条记录
-    * @param ${primaryKey.propertyName}s 主键数组
+    * @param ids 主键数组
     * @return
     */
     @PostMapping("/delete")
     <#if cfg.swaggerFlag>
     @ApiOperation("根据主键字符串删除多条记录")
-    @ApiImplicitParam(name = "${primaryKey.propertyName}s",value = "主键字符串,用逗号分隔",required = true,dataType = "string",paramType = "query")
+    @ApiImplicitParam(name = "ids",value = "主键字符串,用逗号分隔",required = true,dataType = "string",paramType = "query")
     </#if>
-    public Map<String, Object> delete${entity}By${primaryKey.propertyName?cap_first}s(@RequestParam(required = true) String ${primaryKey.propertyName}s){
-        String[] idStrArr = ${primaryKey.propertyName}s.split(",");
+    public Map<String, Object> delete${entity}By${primaryKey.propertyName?cap_first}s(@RequestParam(required = true) String ids){
+        String[] idStrArr = ids.split(",");
         int[] idsArr = Arrays.stream(idStrArr).mapToInt(Integer::parseInt).toArray();
         return JsonResult.failed(0, "", ${entity?uncap_first}Service.deleteBy${primaryKey.propertyName?cap_first}s(idsArr));
     }

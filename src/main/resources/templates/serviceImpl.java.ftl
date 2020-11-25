@@ -16,9 +16,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.util.StringUtils;
 
 /**
- * <p>
- * <#if table.comment??>${table.comment}<#else>${entity}</#if> 服务实现类
- * </p>
+ * <p><#if table.comment??>${table.comment}<#else>${entity}</#if> 服务实现类
  * @author ${author}
  * @date ${date}
  * @Description
@@ -62,7 +60,7 @@ public class ${table.serviceImplName} implements ${table.serviceName} {
     }
 </#if>
 
-<#if cfg.subTableFlag><#-- 是否为子表 -->
+<#if !cfg.subTableFlag><#-- 不为子表 -->
     @Override
     public Long countByQuerys(Map<String, Object> params) {
         return ${entity?uncap_first}Mapper.countByQuerys(params);
