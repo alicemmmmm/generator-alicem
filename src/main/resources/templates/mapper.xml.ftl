@@ -54,6 +54,7 @@
 </#if>
 
 </#if>
+<#if !cfg.subTableFlag><#-- 不为子表 -->
     <!-- 排序条件 -->
     <sql id="orderSql">
         order by
@@ -85,6 +86,7 @@
             </trim>
         </where>
     </sql>
+</#if>
     
 <#if cfg.fdFlag>   
     <!-- 删除状态条件 -->
@@ -115,6 +117,16 @@
         SELECT COUNT(<#if primaryKey??>${primaryKey.name}<#else>*</#if>) FROM ${table.name} with(nolock)
         <include refid="whereSql" />
     </select>
+</#if>
+
+<#if cfg.subTableFlag><#-- 是否为子表 -->
+	<!-- 根据主表id删除 -->
+	<delete id="deleteByMainIds">
+        delete from ${table.name} where ${cfg.mainTableIdName} in
+        <foreach collection="mainIds" item="mainId" index="index" open="(" separator="," close=")">
+        ${r'#{mainId}'}
+        </foreach>
+    </delete>
 </#if>
 
 <#if primaryKey??>

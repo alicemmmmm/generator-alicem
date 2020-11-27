@@ -49,9 +49,8 @@ public class ${table.controllerName} {
     private ${entity}Service ${entity?uncap_first}Service;
 
 <#if primaryKey??>
-    @ForbidRepeatCommit(createRepeatToken = true)
     @GetMapping("/getBy${primaryKey.propertyName?cap_first}")
-    <#if cfg.swaggerFlag>
+    <#if cfg.swaggerFlag><#-- @ForbidRepeatCommit(createRepeatToken = true) -->
     @ApiOperation("根据主键${primaryKey.propertyName}查询单条记录")
     @ApiImplicitParam(name = "${primaryKey.propertyName}",value = "主键${primaryKey.propertyName}",required = true,dataType = "integer",paramType = "query")
     </#if><#-- @RequestParam(required = true, value = "${primaryKey.propertyName}") Integer ${primaryKey.propertyName} -->
@@ -62,10 +61,10 @@ public class ${table.controllerName} {
 
 <#if primaryKey??>
     /**
-    * <p>插入或更新 带有主键${primaryKey.propertyName}即更新  否则即插入
-    * @param ${entity?uncap_first}
-    * @return 插入成功返回插入后的主键id,更新成功返回更新记录的条数
-    */
+     * <p>插入或更新 带有主键${primaryKey.propertyName}即更新  否则即插入
+     * @param ${entity?uncap_first}
+     * @return 插入成功返回插入后的主键id,更新成功返回更新记录的条数
+     */
     @ForbidRepeatCommit(checkRepeat = true)
     @PostMapping("/save")
     <#if cfg.swaggerFlag>
@@ -80,10 +79,10 @@ public class ${table.controllerName} {
 <#if primaryKey??>
 <#if cfg.fdFlag>
     /**
-    * <p>根据主键字符串移除多条记录  修改删除状态,数据实际存在
-    * @param ids 主键数组
-    * @return
-    */
+     * <p>根据主键字符串移除多条记录  修改删除状态,数据实际存在
+     * @param ids 主键数组
+     * @return
+     */
     @PostMapping("/remove")
     <#if cfg.swaggerFlag>
     @ApiOperation("根据主键数组移除多条记录,修改删除状态,数据实际存在")
@@ -98,10 +97,10 @@ public class ${table.controllerName} {
 
 <#if cfg.deleteMethodFlag>
     /**
-    * <p>根据主键字符串删除多条记录
-    * @param ids 主键数组
-    * @return
-    */
+     * <p>根据主键字符串删除多条记录
+     * @param ids 主键数组
+     * @return
+     */
     @PostMapping("/delete")
     <#if cfg.swaggerFlag>
     @ApiOperation("根据主键字符串删除多条记录")
@@ -117,11 +116,11 @@ public class ${table.controllerName} {
 
 
     /**
-    * @limit  每页大小
-    * @page   当前页码
-    * @return 根据搜索条件查询分页信息
-    */
-    @ForbidRepeatCommit(createRepeatToken = true)
+     * <p>根据搜索条件查询分页信息
+     * @limit  每页大小
+     * @page   当前页码
+     * @return 
+     */<#-- @ForbidRepeatCommit(createRepeatToken = true) -->
     @PostMapping("/list")
     <#if cfg.swaggerFlag>
     @ApiOperation("根据搜索条件查询分页信息")

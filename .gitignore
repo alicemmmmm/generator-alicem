@@ -1,3 +1,4 @@
 target/**
 /generator/**
 /target/
+**/dataSourceConfig.yml
