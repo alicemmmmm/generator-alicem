@@ -117,6 +117,6 @@ public interface ${table.mapperName} {
 	 * @return
 	 */
     @Select("select * from ${table.name} where ${cfg.mainTableIdName} = ${r'#{mainId}'}")
-    List<ManHourWagesSub> selectByMainId(Integer mainId);  
+    List<${entity}> selectByMainId(Integer mainId);  
 </#if> 
 }

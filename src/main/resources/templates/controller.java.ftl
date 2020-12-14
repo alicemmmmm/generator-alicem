@@ -49,8 +49,9 @@ public class ${table.controllerName} {
     private ${entity}Service ${entity?uncap_first}Service;
 
 <#if primaryKey??>
+	@ForbidRepeatCommit(createRepeatToken = true)
     @GetMapping("/getBy${primaryKey.propertyName?cap_first}")
-    <#if cfg.swaggerFlag><#-- @ForbidRepeatCommit(createRepeatToken = true) -->
+    <#if cfg.swaggerFlag>
     @ApiOperation("根据主键${primaryKey.propertyName}查询单条记录")
     @ApiImplicitParam(name = "${primaryKey.propertyName}",value = "主键${primaryKey.propertyName}",required = true,dataType = "integer",paramType = "query")
     </#if><#-- @RequestParam(required = true, value = "${primaryKey.propertyName}") Integer ${primaryKey.propertyName} -->
@@ -120,7 +121,8 @@ public class ${table.controllerName} {
      * @limit  每页大小
      * @page   当前页码
      * @return 
-     */<#-- @ForbidRepeatCommit(createRepeatToken = true) -->
+     */<#--  -->
+    @ForbidRepeatCommit(createRepeatToken = true)
     @PostMapping("/list")
     <#if cfg.swaggerFlag>
     @ApiOperation("根据搜索条件查询分页信息")

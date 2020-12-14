@@ -1,5 +1,5 @@
 #数据库连接配置 
-url: 
-driverName: 
-username: 
-password: 
+url: jdbc:sqlserver://192.168.10.201:1433;DatabaseName=device
+driverName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+username: report
+password: 1q2w3e4r#

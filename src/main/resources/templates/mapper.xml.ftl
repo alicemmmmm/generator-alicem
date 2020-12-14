@@ -124,7 +124,7 @@
 	<delete id="deleteByMainIds">
         delete from ${table.name} where ${cfg.mainTableIdName} in
         <foreach collection="mainIds" item="mainId" index="index" open="(" separator="," close=")">
-        ${r'#{mainId}'}
+        	${r'#{mainId}'}
         </foreach>
     </delete>
 </#if>
@@ -136,7 +136,7 @@
         update ${table.name} set ${cfg.fdFieldName} = <#if cfg.fdFieldType == 'int'>${cfg.fdValue}<#else>'${cfg.fdValue}'</#if>
         where ${primaryKey.name} in
         <foreach collection="primaryKeys" item="primaryKey" index="index" open="(" separator="," close=")">
-        ${r'#{'}primaryKey${r'}'}
+        	${r'#{'}primaryKey${r'}'}
         </foreach>
     </update>
 </#if>
@@ -146,7 +146,7 @@
     <delete id="deleteByPrimaryKeys">
         delete from ${table.name} where ${primaryKey.name} in
         <foreach collection="primaryKeys" item="primaryKey" index="index" open="(" separator="," close=")">
-        ${r'#{'}primaryKey${r'}'}
+        	${r'#{'}primaryKey${r'}'}
         </foreach>
     </delete>
 </#if>
@@ -159,9 +159,11 @@
         <include refid="Base_Column_List" />
         from ${table.name}
         where ${primaryKey.name} = ${r'#{'}${primaryKey.propertyName}${r',jdbcType='}<#if primaryKey.type?upper_case == 'INT'>INTEGER<#else>${primaryKey.type?upper_case}</#if>${r'}'}
+    	<#-- 查询单条记录时,不受删除标记影响
     	<#if cfg.fdFlag>
     	and <include refid="where_delete_status" /> 
     	</#if>
+    	-->
     </select>
 </#if>
 
@@ -175,13 +177,16 @@
 
     <!-- 插入单条数据 -->
     <insert id="insert" parameterType="${package.Entity}.${entity}" <#if primaryKey??>useGeneratedKeys="true" keyProperty="${primaryKey.propertyName}"</#if>>
-        insert into ${table.name} (
-        <include refid="Base_Column_List" />
-        )values (
+        insert into ${table.name} 
+        (
+        	<include refid="Base_Column_List" />
+        )
+        values 
+        (
 <#list table.fields as field>
-        ${r'#{'}${field.propertyName}${r',jdbcType='}<#if field.type?upper_case == 'INT'>INTEGER<#elseif field.type?upper_case == 'DATETIME'>TIMESTAMP<#else>${field.type?upper_case}</#if>${r'}'}<#if field_has_next>,</#if>
+        	${r'#{'}${field.propertyName}${r',jdbcType='}<#if field.type?upper_case == 'INT'>INTEGER<#elseif field.type?upper_case == 'DATETIME'>TIMESTAMP<#else>${field.type?upper_case}</#if>${r'}'}<#if field_has_next>,</#if>
 </#list>
-    )
+    	)
     </insert>
 
     <!-- 插入单条数据,忽略空值 -->
@@ -189,16 +194,16 @@
         insert into ${table.name}
         <trim prefix="(" suffix=")" suffixOverrides=",">
         <#list table.fields as field>
-         <if test="${field.propertyName} != null">
-             ${field.name},
-         </if>
+	        <if test="${field.propertyName} != null">
+	        	${field.name},
+	        </if>
         </#list>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
         <#list table.fields as field>
-        <if test="${field.propertyName} != null">
-        ${r'#{'}${field.propertyName}${r',jdbcType='}<#if field.type?upper_case == 'INT'>INTEGER<#elseif field.type?upper_case == 'DATETIME'>TIMESTAMP<#else>${field.type?upper_case}</#if>${r'}'},
-        </if>
+	        <if test="${field.propertyName} != null">
+	        	${r'#{'}${field.propertyName}${r',jdbcType='}<#if field.type?upper_case == 'INT'>INTEGER<#elseif field.type?upper_case == 'DATETIME'>TIMESTAMP<#else>${field.type?upper_case}</#if>${r'}'},
+	        </if>
         </#list>
         </trim>
     </insert>
@@ -210,7 +215,7 @@
         <#list table.fields as field>
             <#if !field.keyFlag>
             <if test="${field.propertyName} != null">
-            ${field.name} = ${r'#{'}${field.propertyName}${r',jdbcType='}<#if field.type?upper_case == 'INT'>INTEGER<#elseif field.type?upper_case == 'DATETIME'>TIMESTAMP<#else>${field.type?upper_case}</#if>${r'}'},
+            	${field.name} = ${r'#{'}${field.propertyName}${r',jdbcType='}<#if field.type?upper_case == 'INT'>INTEGER<#elseif field.type?upper_case == 'DATETIME'>TIMESTAMP<#else>${field.type?upper_case}</#if>${r'}'},
             </if>
             </#if>
         </#list>

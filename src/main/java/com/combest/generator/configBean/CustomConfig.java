@@ -32,7 +32,7 @@ public class CustomConfig {
 	//连表
 	private Boolean joinFlag;//是否启用连表列
 	
-//	private String joinName;//连表,表的别名(默认取每个单词的首位)
+	private String joinName;//连表,表的别名(默认取每个单词的首位)
 	
 	//swagger模式
 	private Boolean swaggerFlag;//是否启用swagger模式

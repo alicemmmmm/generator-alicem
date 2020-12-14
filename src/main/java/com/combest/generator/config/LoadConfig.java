@@ -111,6 +111,9 @@ public class LoadConfig {
 			}
 			customConfig = CONVERT.customConfig2CustomConfig(customConfig);
 			customConfig.setModelName(COMMON_GLOBAL_CONFIG.getModuleName());
+			if(customConfig.getJoinFlag()) {
+				customConfig.setJoinName(StringUtils.takeTableAlias(customConfig.getTableName()));
+			}
 			customConfigListAfterTreatment.add(customConfig);
 		});
 		logger.info("加载自定义生成表配置完成");
