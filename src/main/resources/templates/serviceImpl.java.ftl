@@ -63,12 +63,12 @@ public class ${table.serviceImplName} implements ${table.serviceName} {
 <#if !cfg.subTableFlag><#-- 不为子表 -->
     @Override
     public Long countByQuerys(Map<String, Object> params) {
-        return ${entity?uncap_first}Mapper.countByQuerys(params);
+        return ${entity?uncap_first}Mapper.selectCountByQuerys(params);
     }
 
     @Override
     public List<${entity}> listByQuerys(Map<String, Object> params) {
-        return ${entity?uncap_first}Mapper.listByQuerys(params);
+        return ${entity?uncap_first}Mapper.selectListByQuerys(params);
     }
 </#if>
 

@@ -103,7 +103,7 @@
     </sql>
 
     <!-- 根据条件分页查询 -->
-    <select id="listByQuerys" resultMap="BaseResultMap">
+    <select id="selectListByQuerys" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List" />
         FROM ${table.name}
@@ -113,7 +113,7 @@
     </select>
 
     <!-- 根据条件查询总记录数 -->
-    <select id="countByQuerys" resultType="java.lang.Long">
+    <select id="selectCountByQuerys" resultType="java.lang.Long">
         SELECT COUNT(<#if primaryKey??>${primaryKey.name}<#else>*</#if>) FROM ${table.name} with(nolock)
         <include refid="whereSql" />
     </select>

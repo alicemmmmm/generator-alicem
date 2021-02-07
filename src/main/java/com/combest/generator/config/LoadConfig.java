@@ -60,9 +60,11 @@ public class LoadConfig {
 		//加载通用全局配置
 		InputStream inputStream = THIS_CLASS_LOADER.getResourceAsStream(GENERATOR_CONFIG_FILE_NAME);		
 		yaml = new Yaml();
+		@SuppressWarnings("unchecked")
 		Map<String, Object> configMap = (Map<String, Object>) yaml.load(inputStream);
 		CONFIG_MAP = configMap;
 		
+		@SuppressWarnings("unchecked")
 		Map<String, Object> map = (Map<String, Object>) configMap.get("commonGlobalConfig");
 		CommonGlobalConfig commonGlobalConfig = JSONObject.parseObject(JSONObject.toJSONString(map), CommonGlobalConfig.class);
 		if(commonGlobalConfig == null) {
@@ -99,6 +101,7 @@ public class LoadConfig {
 	 */
 	public List<CustomConfig> loadCustomConfigList(){
 		logger.info("开始加载自定义生成表配置");
+		@SuppressWarnings("unchecked")
 		List<Map<String, Object>> listMap = (List<Map<String, Object>>) CONFIG_MAP.get("CustomConfig");	
 		JSONArray jsonArray = new JSONArray();
 		jsonArray.addAll(listMap);

@@ -30,17 +30,40 @@ commonGlobalConfig:
 #swaggerFlag: true #是否开启swagger模式
 ##主子表
 #subTableFlag: false #是否为子表(子表不生成 分页查询,保存等接口)
-#mainTableIdName: false #如果为子表,可配置主表的id名称(数据库中的字段名)
+#mainTableIdName: main_id #如果为子表,可配置主表的id名称(数据库中的字段名)
 #mainTableFlag: false #是否为主表
 
 #自定义配置 可对单个表自定义配置 可配置多个(list)
 #建议给表也加个说明(例:XX配置表),生成器多个地方用到
 CustomConfig: 
   - 
-    tableName: clean_plan
-
+    tableName: maintenance_for_inspection
+    joinFlag: true
   - 
-    tableName: clean_plan_sub
+    tableName: spot_check_taskspot_check_record
+  - 
+    tableName: spot_check_task_sub
+    subTableFlag: true
+    mainTableIdName: main_id
+  - 
+    tableName: equipment_scrap_record
+    joinFlag: true
+#    fdFlag: true 
+#    fdFieldName: is_delete 
+#    fdFieldType: varchar 
+#    fdValue: 1
+#  - 
+#    tableName: maintenance_for_inspection_sub
+#    subTableFlag: true
+#    mainTableIdName: mfi_id
+#  - 
+#    tableName: equipment_file
+#    joinFlag: true
+#      
+#    subTableFlag: true
+#    mainTableIdName: mhw_id 
+#    DeleteMethodFlag: true
+
 
 #  - 
 #    tableName: wear_plan

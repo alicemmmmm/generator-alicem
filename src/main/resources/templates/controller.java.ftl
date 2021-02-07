@@ -15,6 +15,8 @@ import com.combest.main.unit.JsonResult;
 import com.combest.annotate.submit.ForbidRepeatCommit;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import com.combest.org.bean.User;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 <#if cfg.swaggerFlag>
 import io.swagger.annotations.Api;
@@ -56,7 +58,10 @@ public class ${table.controllerName} {
     @ApiImplicitParam(name = "${primaryKey.propertyName}",value = "主键${primaryKey.propertyName}",required = true,dataType = "integer",paramType = "query")
     </#if><#-- @RequestParam(required = true, value = "${primaryKey.propertyName}") Integer ${primaryKey.propertyName} -->
     public Map<String, Object> get${entity}By${primaryKey.propertyName?cap_first}(@RequestParam(required = true, value = "id") Integer id){
-    	return JsonResult.failed(0, "", ${entity?uncap_first}Service.getBy${primaryKey.propertyName?cap_first}(id));
+    	Map<String, Object> map =  JsonResult.failed(0, "", ${entity?uncap_first}Service.getBy${primaryKey.propertyName?cap_first}(id));
+    	User user = (User) SecurityContextHolder.getContext().getAuthentication() .getPrincipal();
+		map.put("user", user);
+    	return map;
     }
 </#if>
 
@@ -121,9 +126,8 @@ public class ${table.controllerName} {
      * @limit  每页大小
      * @page   当前页码
      * @return 
-     */<#--  -->
-    @ForbidRepeatCommit(createRepeatToken = true)
-    @PostMapping("/list")
+     */<#-- @ForbidRepeatCommit(createRepeatToken = true) -->
+    @GetMapping("/list")
     <#if cfg.swaggerFlag>
     @ApiOperation("根据搜索条件查询分页信息")
     @ApiImplicitParams({

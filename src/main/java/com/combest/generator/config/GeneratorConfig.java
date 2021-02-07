@@ -67,6 +67,7 @@ public class GeneratorConfig {
 			//单独配置每个表
 			strategyConfig.setInclude(customConfig.getTableName());		
 			String json = JSON.toJSONString(customConfig);
+			@SuppressWarnings("unchecked")
 			Map<String,Object> map = JSON.parseObject(json, Map.class);	
 			
 			InjectionConfig injectionConfig = LOAD_CONFIG.loadInjectionConfig(map);

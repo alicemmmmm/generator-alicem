@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 import ${package.Entity}.${entity};
+<#if cfg.subTableFlag><#-- 为子表 -->
+import org.apache.ibatis.annotations.Select;
+</#if> 
 <#--import org.springframework.stereotype.Repository;-->
 
 /**
@@ -75,14 +78,14 @@ public interface ${table.mapperName} {
      * @param params 搜索参数
      * @return
      */
-    List<${entity}> listByQuerys(Map<String, Object> params);
+    List<${entity}> selectListByQuerys(Map<String, Object> params);
 
     /**
      * <p>根据条件查询总记录数
      * @param params 搜索参数
      * @return
      */
-    Long countByQuerys(Map<String, Object> params);
+    Long selectCountByQuerys(Map<String, Object> params);
 </#if>
 
 <#if cfg.fdFlag>
