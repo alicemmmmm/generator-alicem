@@ -23,6 +23,13 @@ public class CommonGlobalConfig {
 	private String templatePath;//模板所在路径名(用于定制多种策略)
 	
 	/**
+	 * <p>表名映射到实体名称去掉前缀
+	 * <p>例如:如果包名为cn.alicem.moon(子模块名)
+	 * <p>要生成的表名为moon_sea
+	 * <p>如果去除前缀,则生成的实体名为Sea,对应的controller为SeaController,service,mapper也是如此
+	 */
+	private Boolean isRemoveTablePrefix;
+	/**
 	 * 默认配置属性
 	 */
 	public CommonGlobalConfig(){
@@ -32,5 +39,6 @@ public class CommonGlobalConfig {
 		this.moduleName = "moon_sea";
 		this.open = false;
 		this.templatePath = "/templates";
+		this.isRemoveTablePrefix = false;
 	}
 }

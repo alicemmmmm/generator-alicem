@@ -201,9 +201,11 @@ public class LoadConfig {
 		//strategyConfig.setInclude(scanner("表名，多个英文逗号分割").split(",")); //可单独设置表名
         //strategyConfig.setSuperEntityColumns("id");
         //strategyConfig.setControllerMappingHyphenStyle(true);
-
         //自动将数据库中表名为 user_info 格式的转为 UserInfo 命名
-        strategyConfig.setTablePrefix(COMMON_GLOBAL_CONFIG.getModuleName() + "_");//表名映射到实体名称去掉前缀
+        
+        if(COMMON_GLOBAL_CONFIG.getIsRemoveTablePrefix()) {
+        	strategyConfig.setTablePrefix(COMMON_GLOBAL_CONFIG.getModuleName() + "_");//表名映射到实体名称去掉前缀
+        }
         strategyConfig.setEntityBooleanColumnRemoveIsPrefix(true);// Boolean类型字段是否移除is前缀处理
         logger.info("加载策略配置项完成");
 		return strategyConfig;
