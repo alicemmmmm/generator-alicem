@@ -13,6 +13,12 @@ import com.fasterxml.jackson.annotation.JsonFormat;
         <#break>
     </#if>
 </#list>
+<#list table.fields as field>
+    <#if field.type?upper_case == 'DECIMAL'>
+import java.math.BigDecimal;
+        <#break>
+    </#if>
+</#list>
 <#if cfg.swaggerFlag>
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -45,22 +51,23 @@ public class ${entity} implements Serializable {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @ApiModelProperty("<#if field.comment??>${field.comment}</#if>")
-    private ${field.propertyType} ${field.propertyName};<#--<#if field.comment??> //${field.comment}</#if>-->
-    
+    private ${field.propertyType} ${field.propertyName};
+    <#elseif field.type?upper_case == 'DECIMAL'>
+    @ApiModelProperty("<#if field.comment??>${field.comment}</#if>")
+    private BigDecimal ${field.propertyName};
     <#else>
     @ApiModelProperty("<#if field.comment??>${field.comment}</#if>")
-    private ${field.propertyType} ${field.propertyName};<#--<#if field.comment??> //${field.comment}</#if>-->
-    
+    private ${field.propertyType} ${field.propertyName};
     </#if>
 <#else>
 	<#if field.propertyType == 'Date'>
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private ${field.propertyType} ${field.propertyName};<#if field.comment??> //${field.comment}</#if>
-    
+    <#elseif field.type?upper_case == 'DECIMAL'>
+    private BigDecimal ${field.propertyName};<#if field.comment??> //${field.comment}</#if>
     <#else>
     private ${field.propertyType} ${field.propertyName};<#if field.comment??> //${field.comment}</#if>
-    
     </#if>
 </#if>
 </#list>

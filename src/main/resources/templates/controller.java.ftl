@@ -12,19 +12,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.combest.main.unit.JsonResult;
+<#if cfg.repeatCommitFlag>
 import com.combest.annotate.submit.ForbidRepeatCommit;
+</#if>
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.combest.org.bean.User;
 import org.springframework.security.core.context.SecurityContextHolder;
-
 <#if cfg.swaggerFlag>
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 </#if>
-
 import ${package.Service}.${table.serviceName};
 import ${package.Entity}.${entity};
 
@@ -51,7 +51,9 @@ public class ${table.controllerName} {
     private ${entity}Service ${entity?uncap_first}Service;
 
 <#if primaryKey??>
+	<#if cfg.repeatCommitFlag>
 	@ForbidRepeatCommit(createRepeatToken = true)
+	</#if>
     @GetMapping("/getBy${primaryKey.propertyName?cap_first}")
     <#if cfg.swaggerFlag>
     @ApiOperation("根据主键${primaryKey.propertyName}查询单条记录")
@@ -59,7 +61,7 @@ public class ${table.controllerName} {
     </#if><#-- @RequestParam(required = true, value = "${primaryKey.propertyName}") Integer ${primaryKey.propertyName} -->
     public Map<String, Object> get${entity}By${primaryKey.propertyName?cap_first}(@RequestParam(required = true, value = "id") Integer id){
     	Map<String, Object> map =  JsonResult.failed(0, "", ${entity?uncap_first}Service.getBy${primaryKey.propertyName?cap_first}(id));
-    	User user = (User) SecurityContextHolder.getContext().getAuthentication() .getPrincipal();
+    	User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		map.put("user", user);
     	return map;
     }
@@ -71,7 +73,9 @@ public class ${table.controllerName} {
      * @param ${entity?uncap_first}
      * @return 插入成功返回插入后的主键id,更新成功返回更新记录的条数
      */
-    @ForbidRepeatCommit(checkRepeat = true)
+    <#if cfg.repeatCommitFlag>
+	@ForbidRepeatCommit(checkRepeat = true)
+	</#if>
     @PostMapping("/save")
     <#if cfg.swaggerFlag>
     @ApiOperation("插入或更新 带有主键${primaryKey.propertyName}即更新  否则即插入")
@@ -126,7 +130,7 @@ public class ${table.controllerName} {
      * @limit  每页大小
      * @page   当前页码
      * @return 
-     */<#-- @ForbidRepeatCommit(createRepeatToken = true) -->
+     */
     @GetMapping("/list")
     <#if cfg.swaggerFlag>
     @ApiOperation("根据搜索条件查询分页信息")

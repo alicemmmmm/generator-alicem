@@ -43,6 +43,7 @@ public class CustomConfig {
 	
 	private Boolean mainTableFlag;//是否为主表
 	
+	private Boolean repeatCommitFlag;//是否开启重复提交
 	/**
 	 * 默认配置属性
 	 */
@@ -63,5 +64,7 @@ public class CustomConfig {
 		this.mainTableIdName = "";
 		
 		this.mainTableFlag = false;
+		
+		this.repeatCommitFlag = false;
 	}
 }

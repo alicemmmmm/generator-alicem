@@ -7,7 +7,7 @@ commonGlobalConfig:
   #父包名。如果为空，将下面子包名必须写全部， 否则就只需写子包名
   parent: com.combest
   #子包名,模块名 
-  moduleName: device
+  moduleName: production
   #是否生成后自动打开文件所在文件夹
   open: false
   #模板所在路径名(用于定制多种策略)
@@ -37,17 +37,20 @@ commonGlobalConfig:
 #建议给表也加个说明(例:XX配置表),生成器多个地方用到
 CustomConfig: 
   - 
-    tableName: maintenance_for_inspection
-    joinFlag: true
-  - 
-    tableName: spot_check_taskspot_check_record
-  - 
-    tableName: spot_check_task_sub
-    subTableFlag: true
-    mainTableIdName: main_id
-  - 
-    tableName: equipment_scrap_record
-    joinFlag: true
+    tableName: fire_feeding_work_order
+#  - 
+#    tableName: module_run_summary
+#    joinFlag: true
+#  - 
+#    tableName: module_run_summary_detailed
+#    joinFlag: true
+#  - 
+#    tableName: module_battery_manage
+#    subTableFlag: true
+#    mainTableIdName: main_id
+#  - 
+#    tableName: equipment_scrap_record
+#    joinFlag: true
 #    fdFlag: true 
 #    fdFieldName: is_delete 
 #    fdFieldType: varchar 

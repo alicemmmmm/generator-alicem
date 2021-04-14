@@ -179,13 +179,24 @@
     <insert id="insert" parameterType="${package.Entity}.${entity}" <#if primaryKey??>useGeneratedKeys="true" keyProperty="${primaryKey.propertyName}"</#if>>
         insert into ${table.name} 
         (
-        	<include refid="Base_Column_List" />
+        	<#list table.fields as field>
+        		<#if field.name != primaryKey.propertyName>
+					<#if table.fields?size != (field_index + 1)>
+			${field.name},  <#-- <!-- <#if field.comment??>${field.comment}</#if> --><#-- -->
+					<#else>
+			${field.name}  <#-- <!-- <#if field.comment??>${field.comment}</#if> --><#-- -->
+					</#if>
+				</#if>
+			</#list>
+        	<#--<include refid="Base_Column_List" />-->
         )
         values 
         (
-<#list table.fields as field>
-        	${r'#{'}${field.propertyName}${r',jdbcType='}<#if field.type?upper_case == 'INT'>INTEGER<#elseif field.type?upper_case == 'DATETIME'>TIMESTAMP<#else>${field.type?upper_case}</#if>${r'}'}<#if field_has_next>,</#if>
-</#list>
+			<#list table.fields as field>
+				<#if field.name != primaryKey.propertyName>
+			${r'#{'}${field.propertyName}${r',jdbcType='}<#if field.type?upper_case == 'INT'>INTEGER<#elseif field.type?upper_case == 'DATETIME'>TIMESTAMP<#else>${field.type?upper_case}</#if>${r'}'}<#if field_has_next>,</#if>
+				</#if>
+			</#list>
     	)
     </insert>
 
