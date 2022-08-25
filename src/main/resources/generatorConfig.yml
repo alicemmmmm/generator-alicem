@@ -1,18 +1,18 @@
 #通用全局配置参数 
 commonGlobalConfig:
   #开发人员称呼,用于类上的注释
-  author: lhb
+  author: hongbin.Li
   #生成的项目名
   projectName: /generator
   #父包名。如果为空，将下面子包名必须写全部， 否则就只需写子包名
-  parent: com.combest
+  parent: cn.alicem
   #子包名,模块名 
-  moduleName: production
+  moduleName: bkb
   #是否生成后自动打开文件所在文件夹
   open: false
   #模板所在路径名(用于定制多种策略)
 #  templatePath: /planManage
-  templatePath: /templates
+  templatePath: /bkb
 
 
 
@@ -37,53 +37,7 @@ commonGlobalConfig:
 #建议给表也加个说明(例:XX配置表),生成器多个地方用到
 CustomConfig: 
   - 
-    tableName: fire_feeding_work_order
-#  - 
-#    tableName: module_run_summary
-#    joinFlag: true
-#  - 
-#    tableName: module_run_summary_detailed
-#    joinFlag: true
-#  - 
-#    tableName: module_battery_manage
-#    subTableFlag: true
-#    mainTableIdName: main_id
-#  - 
-#    tableName: equipment_scrap_record
-#    joinFlag: true
-#    fdFlag: true 
-#    fdFieldName: is_delete 
-#    fdFieldType: varchar 
-#    fdValue: 1
-#  - 
-#    tableName: maintenance_for_inspection_sub
-#    subTableFlag: true
-#    mainTableIdName: mfi_id
-#  - 
-#    tableName: equipment_file
-#    joinFlag: true
-#      
-#    subTableFlag: true
-#    mainTableIdName: mhw_id 
-#    DeleteMethodFlag: true
-
-
-#  - 
-#    tableName: wear_plan
-#    fdFlag: false 
-#    fdFieldName: is_delete 
-#    fdFieldType: varchar 
-#    fdValue: 1 
-#    
-#    DeleteMethodFlag: true 
-#    joinFlag: false
-#    swaggerFlag: false
-#    
-#    subTableFlag: true
-#    mainTableIdName: wp_id
-#    
-#    mainTableFlag: false
-
+    tableName: USER_INFO
 
 
   
