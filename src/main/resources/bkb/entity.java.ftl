@@ -39,7 +39,7 @@ import lombok.Data;
 <#if cfg.swaggerFlag>
 @ApiModel(value = "${entity}", description = "<#if table.comment??>${table.comment}<#else>${entity}</#if>")
 </#if>
-public class ${entity} implements Serializable {
+public class ${entity} extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
 

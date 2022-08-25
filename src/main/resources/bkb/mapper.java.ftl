@@ -1,13 +1,9 @@
 package ${package.Mapper};
 
-import java.util.List;
-import java.util.Map;
-import org.apache.ibatis.annotations.Param;
 import ${package.Entity}.${entity};
 <#if cfg.subTableFlag><#-- 为子表 -->
 import org.apache.ibatis.annotations.Select;
-</#if> 
-<#--import org.springframework.stereotype.Repository;-->
+</#if>
 
 /**
  * <p><#if table.comment??>${table.comment}<#else>${entity}</#if> Mapper 接口
@@ -15,7 +11,7 @@ import org.apache.ibatis.annotations.Select;
  * @date ${date}
  * @Description
  */
-public interface ${table.mapperName} {
+public interface ${table.mapperName} extends BaseDao<${entity}>{
 <#list table.fields as field>
  <#if field.keyFlag>
  <#assign primaryKey=field/>
